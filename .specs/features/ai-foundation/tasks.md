@@ -153,10 +153,10 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `npm run check` exits 0 on the theme
-- [ ] Test copies the theme to a temp dir, injects an unclosed `{% if %}`, and asserts non-zero exit
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 8 tests pass
+- [x] `npm run check` exits 0 on the theme
+- [x] Test copies the theme to a temp dir, injects an unclosed `{% if %}`, and asserts non-zero exit
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 8 tests pass
 
 **Tests**: static
 **Gate**: quick

@@ -129,9 +129,9 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | -------------- | ----- | ----- | ------ |
 | FND-01 | P1: G1 - `.gitattributes` LF | Tasks | Verified |
 | FND-02 | P1: G1 - index EOL `i/lf` | Tasks | Verified |
-| FND-03 | P1: G1 - `.theme-check.yml` | Tasks | Pending |
-| FND-04 | P1: G1 - `npm run check` exit 0 | Tasks | Pending |
-| FND-05 | P1: G1 - `npm run check` falha em erro | Tasks | Pending |
+| FND-03 | P1: G1 - `.theme-check.yml` | Tasks | Verified |
+| FND-04 | P1: G1 - `npm run check` exit 0 | Tasks | Verified |
+| FND-05 | P1: G1 - `npm run check` falha em erro | Tasks | Verified |
 | FND-06 | P1: G1 - `lint:liquid` `\| t` sem `\| json` em script | Tasks | Pending |
 | E2E-01 | P1: G2 - `test:e2e` sobe `theme dev` | Tasks | Pending |
 | E2E-02 | P1: G2 - erro sem `SHOPIFY_STORE` | Tasks | Pending |

@@ -6,7 +6,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "test:static": "node --test tests/static/*.test.mjs"
+    "test:static": "node --test tests/static/*.test.mjs",
+    "check": "shopify theme check --fail-level error"
   },
   "devDependencies": {
     "@shopify/cli": "^4.8.0"
