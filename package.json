@@ -1,0 +1,12 @@
+{
+  "name": "base-liquid-shopify",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "@shopify/cli": "^4.8.0"
+  }
+}
