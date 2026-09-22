@@ -21,10 +21,10 @@
 ## Handoff
 
 - **Feature**: `.specs/features/ai-foundation`
-- **Phase / Task**: Specify - spec aguardando confirmação
-- **Completed**: none
+- **Phase / Task**: Phase 2 / T9 - Playwright harness (Phase 1 T1–T8 done, 17 static tests passing)
+- **Completed**: T1, T2, T3, T4, T5, T6, T7, T8 (commits 61c1fcc..ec7352b)
 - **In-progress** (file:line): none
-- **Next step**: Usuário confirma o spec e informa a dev store (A-01); depois criar tasks.md
-- **Blockers**: dev store para G2 não definida
-- **Uncommitted files**: 64 arquivos só com CRLF (pré-existente), `.specs/`
+- **Next step**: Criar dev store (`npx shopify store create dev --name flowera-base-e2e --organization-id 237009598 --plan basic --country BR --demo-data`), preencher `.env`, despachar Batch 2 (T9–T14), depois Verifier
+- **Blockers**: criação da dev store bloqueada pelo classificador de permissões; exige o usuário rodar o comando (login Shopify CLI já feito, alias `flowera`)
+- **Uncommitted files**: none
 - **Branch**: master
