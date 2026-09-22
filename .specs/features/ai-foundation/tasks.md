@@ -259,9 +259,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Static test asserts the 3 keys with empty values and `.env` ignored (`git check-ignore .env`)
-- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static` (build gate, end of phase)
-- [ ] Test count: 17 tests pass
+- [x] Static test asserts the 3 keys with empty values and `.env` ignored (`git check-ignore .env`)
+- [x] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static` (build gate, end of phase)
+- [x] Test count: 17 tests pass
 
 **Tests**: static
 **Gate**: build
