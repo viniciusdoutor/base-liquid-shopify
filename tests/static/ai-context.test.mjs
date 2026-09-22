@@ -16,3 +16,26 @@ test('AI-02: .mcp.json declares shadcn as npx shadcn@latest mcp', () => {
   assert.equal(server.command, 'npx');
   assert.deepEqual(server.args, ['shadcn@latest', 'mcp']);
 });
+
+const REQUIRED_SECTIONS = ['Gates', 'Decisões (AD)', 'Convenções', 'Mapa de pastas'];
+
+function section(md, title) {
+  const lines = md.split('\n');
+  const start = lines.indexOf(`## ${title}`);
+  if (start === -1) return null;
+  const end = lines.findIndex((l, i) => i > start && l.startsWith('## '));
+  return lines.slice(start + 1, end === -1 ? undefined : end).join('\n');
+}
+
+test('AI-03: CLAUDE.md has the sections Gates, Decisões (AD), Convenções and Mapa de pastas', () => {
+  const md = readFileSync('CLAUDE.md', 'utf8');
+  const missing = REQUIRED_SECTIONS.filter((title) => section(md, title) === null);
+  assert.deepEqual(missing, []);
+});
+
+test('AI-03: the Gates section lists npm run check, npm run lint:liquid and npm run test:e2e', () => {
+  const gates = section(readFileSync('CLAUDE.md', 'utf8'), 'Gates') ?? '';
+  for (const cmd of ['npm run check', 'npm run lint:liquid', 'npm run test:e2e']) {
+    assert.ok(gates.includes(cmd), `Gates section must list \`${cmd}\``);
+  }
+});

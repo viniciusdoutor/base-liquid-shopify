@@ -149,7 +149,7 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | BUG-08 | P1: Bugs - localization-form sem erro | Tasks | Verified |
 | AI-01 | P2: `.mcp.json` shopify-dev | Tasks | Verified |
 | AI-02 | P2: `.mcp.json` shadcn | Tasks | Verified |
-| AI-03 | P2: `CLAUDE.md` com 4 seções | Tasks | Pending |
+| AI-03 | P2: `CLAUDE.md` com 4 seções | Tasks | Verified |
 
 **Coverage:** 23 total, 0 mapped to tasks, 23 unmapped ⚠️ (mapeamento acontece em `tasks.md`)
 

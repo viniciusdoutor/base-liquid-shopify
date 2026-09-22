@@ -233,9 +233,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Static test asserts the 4 headings and the 3 gate commands
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 15 tests pass
+- [x] Static test asserts the 4 headings and the 3 gate commands
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 15 tests pass
 
 **Tests**: static
 **Gate**: quick
