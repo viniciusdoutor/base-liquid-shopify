@@ -7,7 +7,8 @@
   },
   "scripts": {
     "test:static": "node --test tests/static/*.test.mjs",
-    "check": "shopify theme check --fail-level error"
+    "check": "shopify theme check --fail-level error",
+    "lint:liquid": "node scripts/lint-liquid.mjs"
   },
   "devDependencies": {
     "@shopify/cli": "^4.8.0"

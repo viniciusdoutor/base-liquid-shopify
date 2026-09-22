@@ -180,10 +180,10 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/static/lint-liquid.test.mjs` has a failing fixture (`'{{ 'x' | t }}'` in `<script>`) and a passing fixture (`{{ 'x' | t | json }}`)
-- [ ] `npm run lint:liquid` exits 0 on the theme after the fix
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 11 tests pass
+- [x] `tests/static/lint-liquid.test.mjs` has a failing fixture (`'{{ 'x' | t }}'` in `<script>`) and a passing fixture (`{{ 'x' | t | json }}`)
+- [x] `npm run lint:liquid` exits 0 on the theme after the fix
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 11 tests pass
 
 **Tests**: static
 **Gate**: quick

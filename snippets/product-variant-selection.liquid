@@ -39,9 +39,9 @@
     var priceContainer = section.querySelector('.product__price');
     var gallery = document.getElementById('ProductMedia-{{ section_id }}');
 
-    var ADD = '{{ 'products.product.add_to_cart' | t }}';
-    var SOLD_OUT = '{{ 'products.product.sold_out' | t }}';
-    var UNAVAILABLE = '{{ 'products.product.unavailable' | t }}';
+    var ADD = {{ 'products.product.add_to_cart' | t | json }};
+    var SOLD_OUT = {{ 'products.product.sold_out' | t | json }};
+    var UNAVAILABLE = {{ 'products.product.unavailable' | t | json }};
 
     function selectedOptions() {
       var opts = [];
