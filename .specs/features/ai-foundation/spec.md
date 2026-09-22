@@ -145,7 +145,7 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | BUG-04 | P1: Bugs - troca de variante sem pageerror | Tasks | Pending |
 | BUG-05 | P1: Bugs - carrinho usa `routes.root` | Tasks | Pending |
 | BUG-06 | P1: Bugs - escala `--f8` fluida | Tasks | Pending |
-| BUG-07 | P1: Bugs - gift_card sem erro + QR oficial | Tasks | Pending |
+| BUG-07 | P1: Bugs - gift_card sem erro + QR oficial | Tasks | Verified |
 | BUG-08 | P1: Bugs - localization-form sem erro | Tasks | Verified |
 | AI-01 | P2: `.mcp.json` shopify-dev | Tasks | Pending |
 | AI-02 | P2: `.mcp.json` shadcn | Tasks | Pending |

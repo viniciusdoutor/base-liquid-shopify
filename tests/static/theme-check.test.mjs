@@ -29,3 +29,7 @@ function errorsFor(relPath) {
 test('BUG-08: snippets/localization-form.liquid has zero error-severity offenses', { timeout: 200_000 }, () => {
   assert.deepEqual(errorsFor('snippets/localization-form.liquid'), []);
 });
+
+test('BUG-07: templates/gift_card.liquid has zero error-severity offenses', { timeout: 200_000 }, () => {
+  assert.deepEqual(errorsFor('templates/gift_card.liquid'), []);
+});

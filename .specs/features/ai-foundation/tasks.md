@@ -126,10 +126,10 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Theme Check static test asserts zero error-severity offenses for `templates/gift_card.liquid`
-- [ ] Static test asserts the template contains `'vendor/qrcode.js' | shopify_asset_url`
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 5 tests pass
+- [x] Theme Check static test asserts zero error-severity offenses for `templates/gift_card.liquid`
+- [x] Static test asserts the template contains `'vendor/qrcode.js' | shopify_asset_url`
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 5 tests pass
 
 **Tests**: static
 **Gate**: quick
