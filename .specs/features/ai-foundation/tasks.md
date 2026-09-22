@@ -207,9 +207,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/static/ai-context.test.mjs` asserts both server entries with exact command/args
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 13 tests pass
+- [x] `tests/static/ai-context.test.mjs` asserts both server entries with exact command/args
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 13 tests pass
 
 **Tests**: static
 **Gate**: quick
