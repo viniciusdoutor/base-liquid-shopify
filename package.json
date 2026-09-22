@@ -5,7 +5,9 @@
   "engines": {
     "node": ">=20"
   },
-  "scripts": {},
+  "scripts": {
+    "test:static": "node --test tests/static/*.test.mjs"
+  },
   "devDependencies": {
     "@shopify/cli": "^4.8.0"
   }

@@ -73,10 +73,10 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `.gitattributes` exists with `* text=auto eol=lf`
-- [ ] `tests/static/eol.test.mjs` asserts every `git ls-files --eol` entry with `i/` text EOL reports `i/lf`
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 2 tests pass
+- [x] `.gitattributes` exists with `* text=auto eol=lf`
+- [x] `tests/static/eol.test.mjs` asserts every `git ls-files --eol` entry with `i/` text EOL reports `i/lf`
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 2 tests pass
 
 **Tests**: static
 **Gate**: quick
