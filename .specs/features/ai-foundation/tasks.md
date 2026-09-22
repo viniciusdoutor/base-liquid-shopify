@@ -100,9 +100,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/static/theme-check.test.mjs` runs `shopify theme check -o json` once and asserts zero error-severity offenses for `snippets/localization-form.liquid`
-- [ ] Gate check passes: `npm run test:static`
-- [ ] Test count: 3 tests pass
+- [x] `tests/static/theme-check.test.mjs` runs `shopify theme check -o json` once and asserts zero error-severity offenses for `snippets/localization-form.liquid`
+- [x] Gate check passes: `npm run test:static`
+- [x] Test count: 3 tests pass
 
 **Tests**: static
 **Gate**: quick
