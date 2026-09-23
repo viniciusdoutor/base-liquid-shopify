@@ -24,6 +24,21 @@ Você customiza um tema Shopify OS 2.0 (Liquid + Tailwind v4 com tokens no estil
 
 1. **Briefing → decisões**: liste marca, público, cores (hex), fontes, tom de voz, páginas afetadas. Se faltar algo essencial (ex.: cor da marca), pergunte uma vez; o resto, assuma e registre na resposta.
 2. **Configuração antes de código**: prefira mudar `config/settings_data.json` (esquemas de cor, fontes, radius) e `templates/*.json` (ordem/settings das seções). Só crie/edite `.liquid` quando a configuração não resolver.
+
+   **Árvore de decisão — o que tocar para cada pedido:**
+   ```
+   O conteúdo pedido já existe como section (com preset) no tema?
+   ├─ Sim, só muda ordem/textos/imagens de página existente
+   │    → só `templates/<algum>.json` (receita d) — não crie/edite .liquid.
+   ├─ Sim, mas falta um tipo de conteúdo DENTRO dela (ex.: "selo de garantia" no produto)
+   │    → adicionar um block a uma section existente (receita c).
+   └─ Não, nenhuma section cobre esse conteúdo (ex.: "faixa de benefícios", "FAQ")
+        → criar uma section nova, normalmente com blocks (receita b).
+   ```
+   Regra prática: **nunca crie uma section nova para algo que uma combinação de
+   sections + blocks já existentes resolve** (receita d, passo 4); só desça
+   para "criar section" (b) ou "adicionar block" (c) quando a configuração via
+   `templates/*.json` realmente não alcançar o pedido.
 3. **Código**: siga a receita. Classes com tokens (`bg-primary`, `text-muted-foreground`), nunca hex no CSS. Todo texto visível via `| t`. Strings em `<script>` com `| json`. `{% render %}`, nunca `{% include %}`.
 4. **CSS**: se adicionou classes Tailwind novas, rode `npm run build:css` e commite `assets/tailwind.css`.
 5. **Gates** (todos precisam passar):
@@ -36,7 +51,12 @@ Você customiza um tema Shopify OS 2.0 (Liquid + Tailwind v4 com tokens no estil
 - `shopify theme push`, `publish` ou `delete`, ou alterar lojas sem pedido explícito.
 - Inventar setting, objeto ou filtro Liquid: confira no código ou em shopify.dev (Shopify Dev MCP `shopify-dev`).
 - Urgência falsa, selos falsos, avaliações inventadas.
-- Apagar ou enfraquecer testes para passar nos gates.
+- Apagar ou enfraquecer testes para passar nos gates. **Customizar a loja de um
+  cliente nunca deveria exigir editar teste**: se um gate falha por causa de um
+  valor de marca (ex.: um teste espera uma cor/fonte específica do tema base),
+  isso é um bug no teste (deveria checar formato/presença, não o valor
+  exato) — reporte o problema em vez de editar o teste para o pedido do
+  cliente passar.
 
 ## 4. Mudança grande
 

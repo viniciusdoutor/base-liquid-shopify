@@ -33,6 +33,11 @@ Decisão nova de projeto vai para `.specs/STATE.md` como `AD-NNN`.
 - Finais de linha LF (`.gitattributes`); não commite CRLF.
 - Features novas seguem a skill `tlc-spec-driven`, com spec, tasks e validação em `.specs/features/<feature>/`.
 - Commits no formato Conventional Commits, um por tarefa.
+- **Customizar a loja de um cliente nunca deveria exigir editar teste.** Se um
+  gate (`tests/static/*.mjs`) falha por causa de um valor de marca do tema
+  base (ex.: um teste espera uma cor/fonte hardcoded em vez de checar
+  formato/presença), isso é um bug de design do teste — reporte, não edite o
+  teste para fazer a customização passar.
 
 ## Agentes e modelos
 
@@ -46,6 +51,17 @@ Economia de tokens: o orquestrador (sessão principal) só especifica, decide e 
 | Design de alta ambiguidade (F1 tokens, F3 registry, F5 port) | sessão principal | modelo da sessão | Decisões difíceis de reverter |
 
 Regras: sub-agente lê só `CLAUDE.md` + spec/tasks da feature + trechos que a tarefa toca; devolve resumo compacto, nunca logs completos.
+
+**Ferramenta `Agent` com `isolation: worktree` (harness):** cria o worktree a
+partir de `origin/master` (o último push), **não** do master local — se você
+tem commits locais não empurrados, o agente isolado não os vê. Para pilotos/
+experimentos que precisam do master local exato, crie o worktree manualmente:
+`git worktree add -b <branch> <path> master` e depois um symlink de
+`node_modules` (`ln -s "$(pwd)/node_modules" <path>/node_modules`) em vez de
+reinstalar. Além disso, uma skill recém-adicionada/editada em
+`.claude/skills/` só fica disponível para o agente via `Skill` tool depois de
+reiniciar a sessão; até lá, leia `.claude/skills/<nome>/SKILL.md` direto com
+`Read`.
 
 ## Mapa de pastas
 
