@@ -28,11 +28,11 @@
 
 ## Handoff
 
-- **Feature**: `.specs/features/design-tokens` (F1)
-- **Phase / Task**: Specify
-- **Completed**: F0 ai-foundation DONE (T1-T14, validation PASS a6baa44)
+- **Feature**: plano enxuto (AD-003) concluído
+- **Phase / Task**: A (design-tokens PASS), B (docs/knowledge 01-05 + skill customize-theme), C (piloto Aurora Café em `pilot/aurora-cafe`, achados corrigidos no master)
+- **Completed**: F0 ai-foundation, F1 design-tokens, base de conhecimento, piloto
 - **In-progress** (file:line): none
-- **Next step**: escrever spec.md e design.md de design-tokens
+- **Next step**: decidir push do master para origin; opcional: trazer `sections/benefits-bar.liquid` do piloto para a base; próximo cliente via skill customize-theme
 - **Blockers**: none
 - **Uncommitted files**: none
-- **Branch**: master
+- **Branch**: master (não enviado ao origin)
