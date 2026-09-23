@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: inline (Medium scope - no design.md)
-**Status**: In Progress
+**Status**: Execute complete (T1-T14); pending feature-level Verifier
 
 ---
 
@@ -416,9 +416,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/e2e/type-scale.spec.ts` asserts computed font-size of a `var(--f8)` probe is strictly greater at 1440px than at 375px
-- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of feature)
-- [ ] Test count: 7 e2e pass
+- [x] `tests/e2e/type-scale.spec.ts` asserts computed font-size of a `var(--f8)` probe is strictly greater at 1440px than at 375px
+- [x] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of feature)
+- [x] Test count: 7 e2e pass
 
 **Tests**: e2e
 **Gate**: build

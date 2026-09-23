@@ -64,16 +64,17 @@
     --bold: var(--font-body-family);
     --light: var(--font-body-family);
 
-    /* Fluid type scale */
-    --f0: clamp(0.5rem, 1vw, 0.7rem);
-    --f1: clamp(0.7rem, 1vw, 0.9rem);
-    --f2: clamp(0.9rem, 1vw, 1.1rem);
-    --f3: clamp(1.1rem, 1vw, 1.3rem);
-    --f4: clamp(1.3rem, 1vw, 1.5rem);
-    --f5: clamp(1.5rem, 1vw, 1.8rem);
-    --f6: clamp(1.8rem, 1vw, 2.2rem);
-    --f7: clamp(2.2rem, 1vw, 2.5rem);
-    --f8: clamp(3rem, 1vw, 4rem);
+    /* Fluid type scale: clamp(min, Arem + Bvw, max), interpolated between a
+       375px and a 1440px viewport so each step keeps its previous min/max. */
+    --f0: clamp(0.5rem, calc(0.4296rem + 0.3005vw), 0.7rem);
+    --f1: clamp(0.7rem, calc(0.6296rem + 0.3005vw), 0.9rem);
+    --f2: clamp(0.9rem, calc(0.8296rem + 0.3005vw), 1.1rem);
+    --f3: clamp(1.1rem, calc(1.0296rem + 0.3005vw), 1.3rem);
+    --f4: clamp(1.3rem, calc(1.2296rem + 0.3005vw), 1.5rem);
+    --f5: clamp(1.5rem, calc(1.3944rem + 0.4507vw), 1.8rem);
+    --f6: clamp(1.8rem, calc(1.6592rem + 0.6009vw), 2.2rem);
+    --f7: clamp(2.2rem, calc(2.0944rem + 0.4507vw), 2.5rem);
+    --f8: clamp(3rem, calc(2.6479rem + 1.5023vw), 4rem);
 
     /* Layout */
     --page-width: {{ settings.page_width }}px;

@@ -6,9 +6,9 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 
 ## Goals
 
-- [ ] Gates G1 (estático) e G2 (Playwright contra `shopify theme dev`) executáveis com um comando cada e com exit code confiável
-- [ ] Agentes de IA carregam contexto do projeto (CLAUDE.md + `.mcp.json` com Shopify Dev MCP e shadcn MCP) sem configuração manual
-- [ ] Os 5 bugs corrigidos, cada um coberto por um teste que falha antes da correção
+- [x] Gates G1 (estático) e G2 (Playwright contra `shopify theme dev`) executáveis com um comando cada e com exit code confiável
+- [x] Agentes de IA carregam contexto do projeto (CLAUDE.md + `.mcp.json` com Shopify Dev MCP e shadcn MCP) sem configuração manual
+- [x] Os 5 bugs corrigidos, cada um coberto por um teste que falha antes da correção
 
 ## Out of Scope
 
@@ -144,19 +144,19 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | BUG-03 | P1: Bugs - demais mídias lazy | Tasks | Verified |
 | BUG-04 | P1: Bugs - troca de variante sem pageerror | Tasks | Verified |
 | BUG-05 | P1: Bugs - carrinho usa `routes.root` | Tasks | Verified |
-| BUG-06 | P1: Bugs - escala `--f8` fluida | Tasks | Pending |
+| BUG-06 | P1: Bugs - escala `--f8` fluida | Tasks | Verified |
 | BUG-07 | P1: Bugs - gift_card sem erro + QR oficial | Tasks | Verified |
 | BUG-08 | P1: Bugs - localization-form sem erro | Tasks | Verified |
 | AI-01 | P2: `.mcp.json` shopify-dev | Tasks | Verified |
 | AI-02 | P2: `.mcp.json` shadcn | Tasks | Verified |
 | AI-03 | P2: `CLAUDE.md` com 4 seções | Tasks | Verified |
 
-**Coverage:** 23 total, 0 mapped to tasks, 23 unmapped ⚠️ (mapeamento acontece em `tasks.md`)
+**Coverage:** 23 total, 23 mapped to tasks (T1-T14), 0 unmapped
 
 ---
 
 ## Success Criteria
 
-- [ ] `npm run check`, `npm run lint:liquid` e `npm run test:e2e` retornam exit 0 no tema corrigido
-- [ ] Os testes de BUG-01, 02, 03, 05, 06, 07 e 08 falham contra o código anterior às correções (BUG-04 é teste de regressão)
-- [ ] `git status` limpo após o commit de normalização (zero arquivos com diff só de CRLF)
+- [x] `npm run check`, `npm run lint:liquid` e `npm run test:e2e` retornam exit 0 no tema corrigido
+- [x] Os testes de BUG-01, 02, 03, 05, 06, 07 e 08 falham contra o código anterior às correções (BUG-04 é teste de regressão)
+- [x] `git status` limpo após o commit de normalização (zero arquivos com diff só de CRLF)
