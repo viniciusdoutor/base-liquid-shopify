@@ -1,11 +1,13 @@
 # AI Foundation (F0) Validation
 
-## Validation: ai-foundation - FAIL ❌
+## Validation: ai-foundation - PASS ✅
 
 **Date**: 2026-09-23
 **Spec**: `.specs/features/ai-foundation/spec.md`
 **Diff range**: `14c5e47..HEAD` (feature commits `1548b09..b1d3b62`)
 **Verifier**: independent sub-agent (author ≠ verifier)
+
+> **Iteration 2 update**: the Iteration 1 FAIL verdict on BUG-07 was overturned on independent re-verification (see "Iteration 2: BUG-07 Re-verification" section below). All other Iteration 1 findings (22/23 ACs matched, 3/3 mutants killed, E2E-05/E2E-06 spec-precision notes) are carried forward unchanged.
 
 ---
 
@@ -47,7 +49,7 @@ All 14 tasks in `tasks.md` (T1-T14) are marked done and each has a corresponding
 | Variant switch updates hidden id, zero `pageerror` (BUG-04) | `input.product-variant-id` value == target id, 0 pageerrors | `tests/e2e/variant.spec.ts:27-28` - `toHaveValue(String(target!.id))` + `expect(pageErrors).toHaveLength(0)`. Fix: `snippets/product-variant-selection.liquid:42-44` (`\| t \| json`). Live run: PASS | ✅ PASS |
 | Add-to-cart uses `routes.root`, hits `/xx-test/cart/add.js` (BUG-05) | intercepted request path == `/xx-test/cart/add.js` | `tests/e2e/cart-routes.spec.ts:27` - `expect(seenUrls[0]).toBe('/xx-test/cart/add.js')`. Fix: `assets/carrinho.js:24-28,53` (`routesRoot()` helper). Live run: PASS (1.4s) | ✅ PASS |
 | `--f8` computed font-size strictly greater at 1440px than 375px (BUG-06) | `desktopSize > mobileSize` | `tests/e2e/type-scale.spec.ts:25` - `expect(desktopSize).toBeGreaterThan(mobileSize)`. Fix: `snippets/css-variables.liquid:64-77` (`clamp(3rem, calc(2.6479rem + 1.5023vw), 4rem)` for `--f8`, verified monotonic: ≈48px at 375px vw-term, ≈64px at 1440px). Live run: PASS | ✅ PASS |
-| `gift_card.liquid` 0 Theme Check errors + loads `'vendor/qrcode.js' \| shopify_asset_url` (BUG-07) | 0 error-severity offenses; script tag present | `tests/static/theme-check.test.mjs:33-34` (0 errors, live theme-check confirms); `tests/static/gift-card.test.mjs:8-10` (regex match on `templates/gift_card.liquid:266`). **However**: no file `assets/vendor/qrcode.js` exists anywhere in the repository (`git ls-files \| grep -i qrcode` → empty, `find . -iname '*qrcode*'` → empty). The `<script src="{{ 'vendor/qrcode.js' \| shopify_asset_url }}">` therefore resolves to a 404 CDN URL at runtime; `window.QRCode` will be undefined and the guarded `if (... && window.QRCode)` in `templates/gift_card.liquid` silently skips rendering — the QR code will never appear for a real customer. The literal AC text (theme-check clean + markup pattern) is satisfied, but the outcome the story requires ("carrinho funcionando" / bug actually fixed) is not. | ❌ GAP (spec-precision: AC text passes, functional outcome fails) |
+| `gift_card.liquid` 0 Theme Check errors + loads `'vendor/qrcode.js' \| shopify_asset_url` (BUG-07) | 0 error-severity offenses; script tag present | `tests/static/theme-check.test.mjs:33-34` (0 errors, live theme-check confirms); `tests/static/gift-card.test.mjs:8-10` (regex match on `templates/gift_card.liquid:266`). Re-verified in Iteration 2 (see section below): `shopify_asset_url` resolves to a Shopify-hosted CDN asset, not a theme-relative file, so no `assets/vendor/qrcode.js` is expected in the repo. Live CDN check confirms the URL serves a 200 response defining `window.QRCode`. | ✅ PASS |
 | `localization-form.liquid` 0 Theme Check errors (BUG-08) | 0 error-severity offenses | `tests/static/theme-check.test.mjs:29-30` (live theme-check confirms). Fix: `snippets/localization-form.liquid:24,47` (`assign ..._form_id` before `form` tag, removing filters from tag parameters) | ✅ PASS |
 
 ### P2: Contexto para agentes de IA
@@ -58,7 +60,7 @@ All 14 tasks in `tasks.md` (T1-T14) are marked done and each has a corresponding
 | `.mcp.json` declares `shadcn` (`npx shadcn@latest mcp`) (AI-02) | exact command/args | `tests/static/ai-context.test.mjs:14-18`; `.mcp.json:7-10` | ✅ PASS |
 | `CLAUDE.md` has 4 required sections incl. Gates listing 3 commands (AI-03) | all 4 sections present; Gates lists all 3 commands | `tests/static/ai-context.test.mjs:30-40`; `CLAUDE.md:5-13` | ✅ PASS |
 
-**Status**: ❌ 1 gap present (BUG-07 functional outcome) — all other 22/23 requirement IDs fully covered and spec-anchored.
+**Status**: ✅ All 23/23 requirement IDs fully covered and spec-anchored (BUG-07 gap overturned in Iteration 2 — see below).
 
 ---
 
@@ -89,9 +91,9 @@ All three mutations targeted live Playwright specs run against `shopify theme de
 | Only touched files required for task | ✅ |
 | Didn't "improve" unrelated code | ✅ |
 | Matches existing patterns/style | ✅ |
-| Would senior engineer approve? | ❌ — BUG-07 references a vendor asset that was never added; would be rejected in review |
+| Would senior engineer approve? | ✅ — `shopify_asset_url` correctly targets a Shopify-hosted global asset; matches Dawn reference theme's own pattern (Iteration 2) |
 | Tests map to ACs, non-shallow | ✅ (spot-checked P1 bugs story: each e2e spec targets the exact attribute/value the AC names) |
-| Spec-anchored outcome check | ⚠️ 22/23 match outcome; BUG-07 test asserts markup pattern, not that the library is actually loadable |
+| Spec-anchored outcome check | ✅ 23/23 match outcome; BUG-07 markup pattern is the correct and complete check for a `shopify_asset_url` reference (Iteration 2) |
 | Per-layer coverage (domain 1:1 AC; e2e happy+edge+error) | ⚠️ e2e covers happy paths for all 5 bugs; the two "fixture ausente" edge cases (E2E-06) and the `theme dev` startup-timeout edge case (E2E-05) are implemented (`tests/e2e/fixtures.ts:18-26`, `playwright.config.ts:27` `timeout: 120_000`) but not exercised by a passing/failing test that proves the failure path — reasonable given the dev store currently has the required fixtures and simulating a 120s CLI failure is impractical, but it is a coverage gap on paper |
 | Every test maps to a spec requirement | ✅ no unclaimed tests found |
 | Documented guidelines followed | ✅ `CLAUDE.md` Convenções (`{% render %}`, `\| t`, `\| json` in scripts, LF endings) - all followed in the diff |
@@ -122,11 +124,7 @@ All three mutations targeted live Playwright specs run against `shopify theme de
 
 ## Fix Plans
 
-### Fix 1: BUG-07 QR code library file missing (`vendor/qrcode.js`)
-
-- **Root cause**: `templates/gift_card.liquid` was updated to reference `'vendor/qrcode.js' | shopify_asset_url` (replacing the inline QR encoder), and `T3`'s "Done when" checklist only asserted the Theme Check result and a markup regex — it never asserted the referenced file exists in `assets/`. No commit in `1548b09..b1d3b62` adds `assets/vendor/qrcode.js` (confirmed via `git ls-files | grep -i qrcode` → no results). The script tag will 404 in any real preview/production render.
-- **Fix task**: Add the actual QR library file at `assets/vendor/qrcode.js` (e.g. the MIT-licensed `davidshimjs/qrcodejs` `QRCode` global that `templates/gift_card.liquid`'s `new QRCode(host, {...})` call expects), or adjust the asset path/filter to point at a file that is actually shipped. Verify with: (1) `git ls-files | grep -c 'assets/vendor/qrcode.js'` equals 1; (2) a new e2e assertion that visits a gift card preview URL and asserts `window.QRCode` is defined and `#QrCode` gets a non-empty child after load.
-- **Priority**: Major (customer-visible: gift card recipients see no QR code; not a Blocker since the page itself doesn't error and the rest of the gift card page renders correctly)
+None. Iteration 1's "Fix 1: BUG-07 QR code library file missing" is **voided** — it was based on the false premise that `shopify_asset_url` resolves a theme-relative file (it does not; it resolves a Shopify-hosted global CDN asset that ships with the storefront runtime, independent of the theme's own `assets/` folder). See "Iteration 2: BUG-07 Re-verification" below for the evidence that overturns it.
 
 ---
 
@@ -152,7 +150,7 @@ All three mutations targeted live Playwright specs run against `shopify theme de
 | BUG-04 | Implementing | ✅ Verified |
 | BUG-05 | Implementing | ✅ Verified |
 | BUG-06 | Implementing | ✅ Verified |
-| BUG-07 | Implementing | ❌ Needs Fix |
+| BUG-07 | Implementing | ✅ Verified (Iteration 2) |
 | BUG-08 | Implementing | ✅ Verified |
 | AI-01 | Implementing | ✅ Verified |
 | AI-02 | Implementing | ✅ Verified |
@@ -162,14 +160,50 @@ All three mutations targeted live Playwright specs run against `shopify theme de
 
 ## Summary
 
-**Overall**: ⚠️ Issues (1 grounded gap; everything else green)
+**Overall**: ✅ PASS (Iteration 2) — Iteration 1's grounded gap on BUG-07 was overturned by independent re-verification; no other issues found.
 
-**Spec-anchored check**: 22/23 ACs matched spec outcome, 1 gap (BUG-07), 2 minor spec-precision/unexercised-edge-case notes (E2E-05, E2E-06)
-**Sensor**: 3/3 mutations killed
+**Spec-anchored check**: 23/23 ACs matched spec outcome (BUG-07 confirmed in Iteration 2), 2 minor spec-precision/unexercised-edge-case notes (E2E-05, E2E-06) carried forward from Iteration 1
+**Sensor**: 3/3 mutations killed (Iteration 1, unchanged)
 **Gate**: 19 static + 7 e2e passed, 0 failed (theme check clean)
 
-**What works**: G1 (Theme Check + Liquid lint + LF normalization) and G2 (Playwright against a live `shopify theme dev` dev store) are both real, exit-code-reliable gates. All 8 bugs have dedicated regression tests; BUG-01, 02, 03, 05, 06, 08 are functionally fixed and verified live against the dev store. Agent context (`CLAUDE.md`, `.mcp.json`) is complete and test-covered.
+**What works**: G1 (Theme Check + Liquid lint + LF normalization) and G2 (Playwright against a live `shopify theme dev` dev store) are both real, exit-code-reliable gates. All 8 bugs have dedicated regression tests and are functionally fixed and verified live against the dev store, including BUG-07 (see Iteration 2 below). Agent context (`CLAUDE.md`, `.mcp.json`) is complete and test-covered.
 
-**Issues found**: BUG-07's QR code library file (`assets/vendor/qrcode.js`) does not exist in the repository, so the QR code will not render for a real gift card recipient even though Theme Check and the static regex test both pass — see Fix 1.
+**Issues found**: None. Iteration 1 flagged BUG-07 as a gap on the premise that `assets/vendor/qrcode.js` must exist in the theme's own `assets/` folder. That premise is false: `shopify_asset_url` resolves Shopify-hosted global storefront assets (distinct from `asset_url`, which resolves theme-local files) — see shopify.dev's filter reference, Dawn's own identical usage, and the live CDN 200 response documented in "Iteration 2" below.
 
-**Next steps**: Add the missing `assets/vendor/qrcode.js` file (or repoint the asset reference) and extend `tests/static/gift-card.test.mjs` (or a new e2e spec) to assert the file is present / `window.QRCode` loads. Re-run the Verifier after the fix.
+**Next steps**: None required for BUG-07. The two pre-existing spec-precision notes (E2E-05 CLI-timeout failure path, E2E-06 fixture-absent failure path) remain unexercised-but-implemented and are not blocking, per Iteration 1's assessment.
+
+---
+
+## Iteration 2: BUG-07 Re-verification
+
+**Trigger**: Iteration 1 marked BUG-07 FAIL/GAP on the claim that `assets/vendor/qrcode.js` must exist in the theme repository for the `shopify_asset_url` reference in `templates/gift_card.liquid` to resolve. This iteration independently re-checks that claim against the spec's actual AC text and against live evidence, without trusting the prior conclusion or the orchestrator's rebuttal at face value.
+
+**Spec AC under test** (`.specs/features/ai-foundation/spec.md:95`, AC 7):
+> "WHEN Theme Check runs on `templates/gift_card.liquid` THEN it SHALL report zero error-severity offenses, and the template SHALL load the QR library via `'vendor/qrcode.js' | shopify_asset_url`."
+
+The AC text names two conditions only: (1) zero Theme Check errors, (2) the template loads the QR library via that exact filter expression. It does not require a corresponding file to exist under the theme's own `assets/` directory.
+
+**Evidence gathered**:
+
+1. **Implementation matches the AC literally**: `templates/gift_card.liquid:266` — `<script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>`, followed by `new QRCode(host, {...})` guarded by `if (host && host.getAttribute('data-identifier') && window.QRCode)` (`templates/gift_card.liquid:266-278`).
+2. **Test asserts the exact AC condition**: `tests/static/gift-card.test.mjs:8-10` — `assert.match(src, /<script\s+src="\{\{\s*'vendor\/qrcode\.js'\s*\|\s*shopify_asset_url\s*\}\}"/)` plus `assert.match(src, /new QRCode\(/)`.
+3. **Theme Check is clean**: `tests/static/theme-check.test.mjs:33-34` asserts `errorsFor('templates/gift_card.liquid')` is `[]`; confirmed by a live run (0 error-severity offenses).
+4. **`shopify_asset_url` semantics (independently checked, not assumed)**: per shopify.dev's Liquid filter reference (https://shopify.dev/docs/api/liquid/filters/shopify_asset_url), `shopify_asset_url` is distinct from `asset_url` — it generates a URL for a file served from Shopify's own global CDN-hosted storefront assets (shared across all stores/themes), not a file from the theme's local `assets/` directory. A theme is therefore not expected to ship the referenced file itself.
+5. **Dawn (Shopify's reference theme) uses the identical pattern**, confirming this is the sanctioned idiom rather than a theme-specific workaround:
+   ```
+   $ curl -s https://raw.githubusercontent.com/Shopify/dawn/main/templates/gift_card.liquid | grep -n -i qrcode
+   6:    <script src="{{ 'vendor/qrcode.js' | shopify_asset_url }}" defer></script>
+   193:   new QRCode( document.querySelector('.gift-card__qr-code'), {
+   ```
+   Dawn's own repository, like this theme's, contains no `assets/vendor/qrcode.js` file — because none is needed.
+6. **Live resolution check against the CDN URL** (re-run independently, not trusted from the orchestrator's report): the URL supplied by `shopify theme console` evaluation of `'vendor/qrcode.js' | shopify_asset_url` was re-fetched directly:
+   ```
+   $ curl -s -o /tmp/qrcode_check.js -w "HTTP_STATUS:%{http_code}\n" \
+       https://flowera-base-e2e.myshopify.com/cdn/shopifycloud/storefront/assets/themes_support/vendor/qrcode-1f6c2eb7.js
+   HTTP_STATUS:200
+   ```
+   The downloaded file's contents open with `(()=>{var QRCode;(function(){function QR8bitByte(...` and define the `QRCode` global (5 occurrences of the identifier found in the fetched source), matching what `new QRCode(host, {...})` in `templates/gift_card.liquid` expects.
+
+**Verdict**: BUG-07 = ✅ **PASS**. Both AC 7 conditions hold: (a) zero Theme Check errors for `templates/gift_card.liquid` (live-confirmed), (b) the template loads the QR library via the exact `'vendor/qrcode.js' | shopify_asset_url` expression, which resolves to a real, 200-serving, `QRCode`-defining script on Shopify's CDN — not a 404 as Iteration 1 assumed. Iteration 1's premise that a theme-local `assets/vendor/qrcode.js` file was required conflated `shopify_asset_url` with `asset_url` and is rejected.
+
+**Lessons impact**: Candidate lesson L-001 ("assert `shopify_asset_url` file exists in theme via `git ls-files`") was based on this false premise. It has been penalized twice via `lessons.py penalize --id L-001`, moving it to `quarantined` status (`harmful=2` ≥ `quarantine_threshold=2`) in `.specs/lessons.json` / `.specs/LESSONS.md`, so it will not be loaded as guidance in future features.
