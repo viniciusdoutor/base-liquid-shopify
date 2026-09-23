@@ -93,6 +93,20 @@ test('RAD-02: assets/tailwind.css defines --radius-sm/md/lg/xl derived from var(
   assert.match(css, /--radius-xl:\s*calc\(var\(--radius\)\s*\+\s*4px\)/);
 });
 
+test("TW-06: layout/theme.liquid loads tailwind.css after index.css and before content_for_header", () => {
+  const src = readFileSync('layout/theme.liquid', 'utf8');
+  const indexCssIdx = src.indexOf("{{ 'index.css' | asset_url | stylesheet_tag }}");
+  const tailwindCssIdx = src.indexOf("{{ 'tailwind.css' | asset_url | stylesheet_tag }}");
+  // The file's header comment also mentions "content_for_header" in prose; search past the
+  // tailwind.css tag so this finds the real `{{ content_for_header }}` output, not the comment.
+  const contentForHeaderIdx = src.indexOf('{{ content_for_header }}', tailwindCssIdx);
+  assert.notEqual(indexCssIdx, -1, 'index.css stylesheet_tag not found');
+  assert.notEqual(tailwindCssIdx, -1, 'tailwind.css stylesheet_tag not found');
+  assert.notEqual(contentForHeaderIdx, -1, 'content_for_header not found');
+  assert.ok(indexCssIdx < tailwindCssIdx, 'tailwind.css must load after index.css');
+  assert.ok(tailwindCssIdx < contentForHeaderIdx, 'tailwind.css must load before content_for_header');
+});
+
 test('TW-07: npm run dev runs watch:css and shopify theme dev in parallel via concurrently', () => {
   const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
   assert.match(pkg.scripts.dev, /concurrently/);

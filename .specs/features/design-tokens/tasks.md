@@ -123,8 +123,8 @@ T9 → T10
 
 **Done when**:
 
-- [ ] Static test asserts tag present and positioned before `content_for_header`
-- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static` (build gate, end of phase)
+- [x] Static test asserts tag present and positioned before `content_for_header`
+- [x] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static` (build gate, end of phase)
 
 **Tests**: static
 **Gate**: build

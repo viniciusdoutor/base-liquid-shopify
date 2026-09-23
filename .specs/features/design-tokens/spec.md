@@ -154,7 +154,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | TW-03 | P1: Pipeline - safelist de tokens | Tasks | Verified |
 | TW-04 | P1: Pipeline - sem preflight | Tasks | Verified |
 | TW-05 | P1: Pipeline - CSS commitado atualizado | Tasks | Verified |
-| TW-06 | P1: Pipeline - layout carrega tailwind.css | Design | Pending |
+| TW-06 | P1: Pipeline - layout carrega tailwind.css | Tasks | Verified |
 | TW-07 | P1: Pipeline - npm run dev paralelo | Tasks | Verified |
 | CS-01 | P1: Esquemas - definition 16 ids | Design | Pending |
 | CS-02 | P1: Esquemas - roles | Design | Pending |
@@ -182,7 +182,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Design | Pending |
 
-**Coverage:** 32 total, 7 mapped to tasks (T1-T2), 25 unmapped ⚠️ (mapeamento em `tasks.md`)
+**Coverage:** 32 total, 8 mapped to tasks (T1-T3), 24 unmapped ⚠️ (mapeamento em `tasks.md`) — Phase 1 (Tailwind pipeline) complete
 
 ---
 
