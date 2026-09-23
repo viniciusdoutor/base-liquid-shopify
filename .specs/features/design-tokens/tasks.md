@@ -72,8 +72,8 @@ T9 → T10
 
 **Done when**:
 
-- [ ] `tests/static/tailwind.test.mjs` asserts build exit 0, `.bg-primary` uses `var(--primary)` (via temp liquid fixture with `@source`), every safelist class present, no preflight block, `--radius-sm/md/lg/xl` formulas
-- [ ] Gate check passes: `npm run test:static`
+- [x] `tests/static/tailwind.test.mjs` asserts build exit 0, `.bg-primary` uses `var(--primary)` (via temp liquid fixture with `@source`), every safelist class present, no preflight block, `--radius-sm/md/lg/xl` formulas
+- [x] Gate check passes: `npm run test:static`
 
 **Tests**: static
 **Gate**: quick

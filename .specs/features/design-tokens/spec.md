@@ -149,10 +149,10 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| TW-01 | P1: Pipeline - build:css compila | Design | Pending |
-| TW-02 | P1: Pipeline - classe em .liquid gera regra | Design | Pending |
-| TW-03 | P1: Pipeline - safelist de tokens | Design | Pending |
-| TW-04 | P1: Pipeline - sem preflight | Design | Pending |
+| TW-01 | P1: Pipeline - build:css compila | Tasks | Verified |
+| TW-02 | P1: Pipeline - classe em .liquid gera regra | Tasks | Verified |
+| TW-03 | P1: Pipeline - safelist de tokens | Tasks | Verified |
+| TW-04 | P1: Pipeline - sem preflight | Tasks | Verified |
 | TW-05 | P1: Pipeline - CSS commitado atualizado | Design | Pending |
 | TW-06 | P1: Pipeline - layout carrega tailwind.css | Design | Pending |
 | TW-07 | P1: Pipeline - npm run dev paralelo | Design | Pending |
@@ -168,7 +168,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | LEG-02 | P1: Legado - herda esquema local | Design | Pending |
 | LEG-03 | P1: Legado - theme check verde | Design | Pending |
 | RAD-01 | P1: Radius - setting | Design | Pending |
-| RAD-02 | P1: Radius - escala derivada | Design | Pending |
+| RAD-02 | P1: Radius - escala derivada | Tasks | Verified |
 | RAD-03 | P1: Fontes - font-sans | Design | Pending |
 | RAD-04 | P1: Fontes - font-heading | Design | Pending |
 | IMP-01 | P2: Import - :root → scheme-1 | Design | Pending |
@@ -182,7 +182,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Design | Pending |
 
-**Coverage:** 32 total, 0 mapped to tasks, 32 unmapped ⚠️ (mapeamento em `tasks.md`)
+**Coverage:** 32 total, 5 mapped to tasks (T1), 27 unmapped ⚠️ (mapeamento em `tasks.md`)
 
 ---
 

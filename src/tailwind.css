@@ -1,0 +1,68 @@
+/*
+  ============================================================
+  tailwind.css — entrada do pipeline Tailwind v4 (F1 design-tokens)
+  ============================================================
+
+  O QUE FAZ:
+  Gera utilitários shadcn/ui (bg-primary, text-muted-foreground,
+  rounded-lg...) que leem as CSS custom properties emitidas por
+  snippets/css-variables.liquid a partir de settings.color_schemes.
+
+  Só importa as camadas `theme` e `utilities` (sem `preflight`):
+  o reset do Tailwind conflita com assets/normalizar.css e
+  assets/base.css já usados pelo tema (A-02).
+
+  COMO GERAR:
+  npm run build:css   → compila para assets/tailwind.css (commitado)
+  npm run watch:css   → recompila a cada mudança
+
+  NÃO EDITE assets/tailwind.css À MÃO — é gerado por este arquivo.
+*/
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Onde procurar classes usadas em arquivos .liquid (AC TW-02). */
+@source "../layout";
+@source "../sections";
+@source "../snippets";
+@source "../blocks";
+@source "../templates";
+
+/*
+  Safelist (A-07 / AC TW-03): tokens shadcn combinados com os prefixos de cor
+  mais comuns. Necessário porque classes montadas por settings (ex.: uma cor
+  escolhida no editor) não aparecem como texto literal para o scanner do
+  Tailwind.
+*/
+@source inline("{bg,text,border,ring}-{background,foreground,card,card-foreground,popover,popover-foreground,primary,primary-foreground,secondary,secondary-foreground,muted,muted-foreground,accent,accent-foreground,destructive,border,input,ring,sale}");
+
+@theme inline {
+  /* Tokens de cor shadcn — apontam direto para as custom properties de
+     snippets/css-variables.liquid, então uma seção com `.color-scheme-2`
+     re-escopa os utilitários automaticamente (ver design.md). */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sale: var(--sale);
+
+  /* Escala de radius shadcn v4, derivada de --radius (settings.radius). */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
