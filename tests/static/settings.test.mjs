@@ -116,13 +116,16 @@ test('CS-03: settings_data.json defines scheme-1/2/3 with a hex value for each o
   }
 });
 
-test('CS-08: legacy color keys are removed from settings_data.json (current and presets), color_sale remains', () => {
+test('CS-08: legacy color keys are removed from settings_data.json (current and presets), color_sale remains a valid hex', () => {
+  // color_sale's exact value is a brand choice (client customizations change it), not part of
+  // this spec's contract — CS-08 only requires the key to exist and stay a valid hex color, so
+  // customizing a store's color_sale must never require editing this test.
   const data = loadData();
   for (const scope of [data.current, data.presets['Base Liquid']]) {
     for (const id of REMOVED_LEGACY_IDS) {
       assert.equal(scope[id], undefined, `legacy key "${id}" must be removed from settings_data.json`);
     }
-    assert.equal(scope.color_sale, '#1cb744');
+    assert.match(scope.color_sale, /^#[0-9a-fA-F]{6}$/, 'color_sale must be a hex color');
   }
 });
 
