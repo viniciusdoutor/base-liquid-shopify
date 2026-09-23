@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'node:url';
 
 // G2 (AD-002): Playwright contra `shopify theme dev`. Credenciais vêm do `.env` (ver `.env.example`).
 dotenv.config({ quiet: true });
@@ -30,8 +31,13 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  // T11: `--error-overlay silent` is intentionally NOT passed here. That flag hides the
+  // "Failed to Upload Theme Files" fallback page the CLI serves when it can't push a theme
+  // file (e.g. an invalid settings_schema.json), which let a broken upload pass G2 silently.
+  // globalSetup below polls for that page and fails the run when it appears.
+  globalSetup: fileURLToPath(new URL('./tests/e2e/global-setup.ts', import.meta.url)),
   webServer: {
-    command: `npx shopify theme dev --host 127.0.0.1 --port ${PORT} --live-reload off --error-overlay silent --no-color`,
+    command: `npx shopify theme dev --host 127.0.0.1 --port ${PORT} --live-reload off --no-color`,
     url: BASE_URL,
     timeout: 120_000,
     reuseExistingServer: true,

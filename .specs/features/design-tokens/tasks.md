@@ -53,6 +53,20 @@ T4 → T5 → T6 → T7 → T8
 T9 → T10
 ```
 
+### Phase 4: Fixes
+
+```
+T11 → T12
+```
+
+Orchestrator-verified bug: Shopify rejects `config/settings_schema.json` on upload
+(`role: background.gradient precisa referenciar uma definição do tipo
+color_background`). Theme Check and the e2e suite both pass because
+`shopify theme dev` runs with `--error-overlay silent` and nothing checks upload
+errors, so the dev theme silently keeps serving the last-known-good remote copy.
+T11 closes that gate gap first (must go RED against the current broken schema);
+T12 fixes the schema (must turn T11 GREEN).
+
 ---
 
 ## Task Breakdown
@@ -310,14 +324,71 @@ T9 → T10
 
 ---
 
+### T11: Fail G2 when theme dev cannot upload theme files
+
+**What**: Close the gate gap: add a Playwright `globalSetup` (`tests/e2e/global-setup.ts`) that, once the dev server responds, polls `GET /` for up to ~25s and throws (failing the whole e2e run) if the response body is Shopify CLI's "Failed to Upload Theme Files" fallback page instead of the storefront. Remove `--error-overlay silent` from `webServer.command` in `playwright.config.ts`, since that flag is what currently suppresses the fallback page and lets the suite pass against a theme the CLI could not fully upload.
+**Where**: `playwright.config.ts`
+**Depends on**: None (Phase 1-3 complete)
+**Reuses**: existing `webServer` config (AD-002)
+**Requirement**: GATE-01 (new, orchestrator-verified fix — see spec.md Assumptions)
+
+**Tools**:
+
+- MCP: NONE
+- Skill: NONE
+
+**Done when**:
+
+- [x] `tests/e2e/global-setup.ts` exists, is wired via `globalSetup` in `playwright.config.ts`, and fails with a clear message (including the CLI's per-file error text) when the upload-failure page is detected
+- [x] `--error-overlay silent` removed from `webServer.command`
+- [x] Proven RED first: `npm run test:e2e` run against the current (broken) `config/settings_schema.json` fails via the new global setup, not by coincidence in an unrelated test — evidence captured before T12 touches the schema (global-setup.ts:42 threw `Error: shopify theme dev could not upload one or more theme files (G2 gate). ... Section 3: setting with id="color_schemes" role: background.gradient precisa referenciar uma definição do tipo color_background`, exit code 1)
+- [x] This task is committed in the RED state (bug-task protocol); the gate is expected to fail until T12 lands
+
+**Tests**: e2e
+**Gate**: red (intentional — see Done when; full gate resumes at T12)
+
+**Commit**: `test(e2e): fail when theme dev cannot upload files`
+
+---
+
+### T12: Add gradient definition required by color scheme roles
+
+**What**: Fix the schema Shopify rejected. Add a `color_background` definition `background_gradient` to the `color_schemes` definition (English label in `locales/en.default.schema.json`, matching the repo's existing `t:settings_schema.colors.settings.color_schemes.settings.<id>.label` nesting), point `role.background.gradient` to it (Dawn/Horizon pattern), and add `background_gradient: ""` to every scheme (`scheme-1/2/3`) in `config/settings_data.json` (`current` and the `Base Liquid` preset). Update `tests/static/settings.test.mjs` (CS-01/CS-02/CS-03) for the 17th field and the `role.background.gradient` assertion, and record the deviation from CS-01's 16-id list in `spec.md`.
+**Where**: `config/settings_schema.json`
+**Depends on**: T11
+**Reuses**: Dawn `color_scheme_group` pattern (`background_gradient`, `color_background` type)
+**Requirement**: CS-09 (new — SPEC_DEVIATION of CS-01, see spec.md Assumptions)
+
+**Tools**:
+
+- MCP: `shopify-dev`
+- Skill: NONE
+
+**Done when**:
+
+- [ ] `settings_schema.json`'s `color_schemes.definition` includes `background_gradient` with `type: color_background`, and `role.background.gradient` equals `background_gradient`
+- [ ] `config/settings_data.json` sets `background_gradient: ""` for `scheme-1/2/3` in both `current` and the `Base Liquid` preset
+- [ ] `tests/static/settings.test.mjs` updated: CS-01 expects the 16 shadcn ids plus `background_gradient`; CS-02 asserts `role.background.gradient === 'background_gradient'`; CS-03 expects the extra key with value `''` and does not weaken the 16 hex-color assertions
+- [ ] `spec.md` Assumptions table gets a SPEC_DEVIATION row for the 17th field; Requirement Traceability gets GATE-01 and CS-09 rows, both `Verified`
+- [ ] T11's `global-setup.ts` no longer fails (upload succeeds) — the RED from T11 is now GREEN
+- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of batch)
+
+**Tests**: static, e2e
+**Gate**: build
+
+**Commit**: `fix(settings): add gradient definition required by color scheme roles`
+
+---
+
 ## Phase Execution Map
 
 ```
-Phase 1 → Phase 2 → Phase 3
+Phase 1 → Phase 2 → Phase 3 → Phase 4
 
 Phase 1:  T1 ---→ T2 ---→ T3
 Phase 2:  T4 ---→ T5 ---→ T6 ---→ T7 ---→ T8
 Phase 3:  T9 ---→ T10
+Phase 4:  T11 ---→ T12
 ```
 
-Batches: Batch 1 = Phases 1+2 (8 tasks, sonnet); Batch 2 = Phase 3 (2 tasks, sonnet).
+Batches: Batch 1 = Phases 1+2 (8 tasks, sonnet); Batch 2 = Phase 3 (2 tasks, sonnet); Batch 3 = Phase 4 fixes (2 tasks, sonnet).

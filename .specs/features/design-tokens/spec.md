@@ -36,6 +36,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | A-07 Classes safelist | `@source inline(...)` com todas as combinações `{bg,text,border,ring,outline,fill,stroke}-{token}` | Permite usar tokens em Custom Liquid e em classes montadas por settings | n (default do agente) |
 | A-08 Biblioteca de conversão de cor no import | `culori` (devDependency) | Conversão OKLCH/HSL → sRGB hex correta com gamut clamp | n (default do agente) |
 | A-09 Formato do tweakcn | Qualquer CSS com blocos `:root { --token: valor; }` e opcional `.dark { ... }` | Formato exato do tweakcn não foi verificado na pesquisa; esse é o formato documentado do shadcn | n (default do agente) |
+| A-10 (SPEC_DEVIATION de CS-01) `color_schemes.definition` tem 17 campos, não 16 | Adicionar `background_gradient` (`type: color_background`, sem hex, valor `""` em cada esquema) além dos 16 ids do CS-01 | Shopify rejeita o upload de `settings_schema.json`: `role.background.gradient` precisa referenciar uma definição do tipo `color_background`, não `color` (confirmado com `config/settings_schema.json` real e o padrão do Dawn/Horizon no GitHub) — sem isso, `shopify theme dev`/`theme push` falham ao enviar o arquivo e a loja de dev fica com o schema antigo | y (orchestrator-verified batch fix) |
 
 **Open questions:** none - all resolved or logged above as agent defaults (assumptions marked "n" can be revised by the user).
 
@@ -181,8 +182,10 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-08 | Edge: gamut clamp | Design | Pending |
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Tasks | Verified |
+| GATE-01 | Fix: G2 fails when `shopify theme dev` cannot upload a theme file | Phase 4 (T11) | Verified |
+| CS-09 (SPEC_DEVIATION of CS-01, see A-10) | Fix: `background_gradient` (`color_background`) definition required by `role.background.gradient` | Phase 4 (T12) | Pending |
 
-**Coverage:** 32 total, 23 mapped to tasks (T1-T8), 9 unmapped (IMP-01..09, P2 import script — Phase 3/T9-T10 cancelled by orchestrator decision, out of this batch's scope)
+**Coverage:** 32 total, 23 mapped to tasks (T1-T8), 9 unmapped (IMP-01..09, P2 import script — Phase 3/T9-T10 cancelled by orchestrator decision, out of this batch's scope). GATE-01 and CS-09 are additional requirements raised by the orchestrator-verified Phase 4 bug fix (settings_schema.json upload rejection), outside the original 32.
 
 ---
 
