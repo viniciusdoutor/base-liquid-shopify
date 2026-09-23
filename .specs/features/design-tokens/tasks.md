@@ -174,8 +174,8 @@ T9 → T10
 
 **Done when**:
 
-- [ ] Static test asserts 3 schemes × 16 hex values and no legacy color keys
-- [ ] Gate check passes: `npm run test:static`
+- [x] Static test asserts 3 schemes × 16 hex values and no legacy color keys
+- [x] Gate check passes: `npm run test:static`
 
 **Tests**: static
 **Gate**: quick

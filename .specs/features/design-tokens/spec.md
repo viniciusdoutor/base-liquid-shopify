@@ -158,7 +158,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | TW-07 | P1: Pipeline - npm run dev paralelo | Tasks | Verified |
 | CS-01 | P1: Esquemas - definition 16 ids | Tasks | Verified |
 | CS-02 | P1: Esquemas - roles | Tasks | Verified |
-| CS-03 | P1: Esquemas - 3 esquemas em settings_data | Design | Pending |
+| CS-03 | P1: Esquemas - 3 esquemas em settings_data | Tasks | Verified |
 | CS-04 | P1: Esquemas - classes .color-<id> | Design | Pending |
 | CS-05 | P1: Esquemas - :root = scheme-1 | Design | Pending |
 | CS-06 | P1: Esquemas - seção com scheme-2 | Design | Pending |
@@ -182,7 +182,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Design | Pending |
 
-**Coverage:** 32 total, 12 mapped to tasks (T1-T4), 20 unmapped ⚠️ (mapeamento em `tasks.md`) — Phase 1 (Tailwind pipeline) complete
+**Coverage:** 32 total, 13 mapped to tasks (T1-T5), 19 unmapped ⚠️ (mapeamento em `tasks.md`)
 
 ---
 

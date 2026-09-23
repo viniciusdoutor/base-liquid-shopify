@@ -72,6 +72,36 @@ test('CS-08: legacy color settings are removed from settings_schema.json and col
   assert.equal(sale.type, 'color');
 });
 
+function loadData() {
+  return JSON.parse(readFileSync('config/settings_data.json', 'utf8'));
+}
+
+test('CS-03: settings_data.json defines scheme-1/2/3 with a hex value for each of the 16 definition ids', () => {
+  const data = loadData();
+  for (const scope of [data.current, data.presets['Base Liquid']]) {
+    assert.ok(scope.color_schemes, 'color_schemes missing');
+    for (const schemeId of ['scheme-1', 'scheme-2', 'scheme-3']) {
+      const scheme = scope.color_schemes[schemeId];
+      assert.ok(scheme, `${schemeId} missing`);
+      const settings = scheme.settings;
+      assert.deepEqual(Object.keys(settings).sort(), [...SCHEMA_IDS].sort(), `${schemeId} must define exactly the 16 ids`);
+      for (const id of SCHEMA_IDS) {
+        assert.match(settings[id], /^#[0-9a-fA-F]{6}$/, `${schemeId}.${id} must be a hex color`);
+      }
+    }
+  }
+});
+
+test('CS-08: legacy color keys are removed from settings_data.json (current and presets), color_sale remains', () => {
+  const data = loadData();
+  for (const scope of [data.current, data.presets['Base Liquid']]) {
+    for (const id of REMOVED_LEGACY_IDS) {
+      assert.equal(scope[id], undefined, `legacy key "${id}" must be removed from settings_data.json`);
+    }
+    assert.equal(scope.color_sale, '#1cb744');
+  }
+});
+
 test('RAD-01: settings_schema.json defines a "radius" range setting (0-24px, step 1, default 10)', () => {
   const schema = loadSchema();
   const radius = findSettingById(schema, 'radius');
