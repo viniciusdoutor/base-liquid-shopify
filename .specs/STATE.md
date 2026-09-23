@@ -20,11 +20,11 @@
 
 ## Handoff
 
-- **Feature**: `.specs/features/ai-foundation`
-- **Phase / Task**: Phase 2 / T9 - Playwright harness (Phase 1 T1–T8 done, 17 static tests passing)
-- **Completed**: T1, T2, T3, T4, T5, T6, T7, T8 (commits 61c1fcc..ec7352b)
+- **Feature**: `.specs/features/design-tokens` (F1)
+- **Phase / Task**: Specify
+- **Completed**: F0 ai-foundation DONE (T1-T14, validation PASS a6baa44)
 - **In-progress** (file:line): none
-- **Next step**: Criar dev store (`npx shopify store create dev --name flowera-base-e2e --organization-id 237009598 --plan basic --country BR --demo-data`), preencher `.env`, despachar Batch 2 (T9–T14), depois Verifier
-- **Blockers**: criação da dev store bloqueada pelo classificador de permissões; exige o usuário rodar o comando (login Shopify CLI já feito, alias `flowera`)
+- **Next step**: escrever spec.md e design.md de design-tokens
+- **Blockers**: none
 - **Uncommitted files**: none
 - **Branch**: master
