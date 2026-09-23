@@ -11,12 +11,14 @@
     "lint:liquid": "node scripts/lint-liquid.mjs",
     "test:e2e": "playwright test",
     "build:css": "tailwindcss -i src/tailwind.css -o assets/tailwind.css",
-    "watch:css": "tailwindcss -i src/tailwind.css -o assets/tailwind.css --watch"
+    "watch:css": "tailwindcss -i src/tailwind.css -o assets/tailwind.css --watch",
+    "dev": "concurrently \"npm:watch:css\" \"shopify theme dev\""
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@shopify/cli": "^4.8.0",
     "@tailwindcss/cli": "^4.3.3",
+    "concurrently": "^10.0.5",
     "dotenv": "^18.0.3",
     "tailwindcss": "^4.3.3"
   }

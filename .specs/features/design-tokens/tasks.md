@@ -97,9 +97,9 @@ T9 → T10
 
 **Done when**:
 
-- [ ] Test fails when committed CSS is stale (proved with a temp mutation) and passes when fresh
-- [ ] Static test asserts `dev` script runs both commands
-- [ ] Gate check passes: `npm run test:static`
+- [x] Test fails when committed CSS is stale (proved with a temp mutation) and passes when fresh
+- [x] Static test asserts `dev` script runs both commands
+- [x] Gate check passes: `npm run test:static`
 
 **Tests**: static
 **Gate**: quick

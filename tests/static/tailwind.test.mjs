@@ -14,6 +14,26 @@ const SAFELIST_TOKENS = [
 ];
 const SAFELIST_PREFIXES = ['bg', 'text', 'border', 'ring'];
 
+// TW-05 must run before any test that invokes `npm run build:css` (TW-01): that script overwrites the
+// real assets/tailwind.css in place, which would make a staleness check vacuously pass afterwards.
+// Checking freshness first means it inspects the file exactly as committed to git.
+test('TW-05 (tailwind-fresh): committed assets/tailwind.css matches a fresh build of src/tailwind.css', () => {
+  const committed = readFileSync(OUTPUT, 'utf8');
+  const dir = mkdtempSync(join(tmpdir(), 'tw-fresh-'));
+  try {
+    const out = join(dir, 'fresh.css');
+    const res = spawnSync('npx', ['tailwindcss', '-i', 'src/tailwind.css', '-o', out], {
+      encoding: 'utf8',
+      timeout: 60_000,
+    });
+    assert.equal(res.status, 0, `fresh tailwind build failed:\n${res.stdout}\n${res.stderr}`);
+    const fresh = readFileSync(out, 'utf8');
+    assert.equal(committed, fresh, `${OUTPUT} is stale - run npm run build:css and commit the result`);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 test('TW-01: npm run build:css compiles src/tailwind.css into assets/tailwind.css and exits 0', () => {
   const res = spawnSync('npm', ['run', '--silent', 'build:css'], { encoding: 'utf8', timeout: 60_000 });
   assert.equal(res.status, 0, `npm run build:css failed:\n${res.stdout}\n${res.stderr}`);
@@ -71,4 +91,11 @@ test('RAD-02: assets/tailwind.css defines --radius-sm/md/lg/xl derived from var(
   assert.match(css, /--radius-md:\s*calc\(var\(--radius\)\s*-\s*2px\)/);
   assert.match(css, /--radius-lg:\s*var\(--radius\)/);
   assert.match(css, /--radius-xl:\s*calc\(var\(--radius\)\s*\+\s*4px\)/);
+});
+
+test('TW-07: npm run dev runs watch:css and shopify theme dev in parallel via concurrently', () => {
+  const pkg = JSON.parse(readFileSync('package.json', 'utf8'));
+  assert.match(pkg.scripts.dev, /concurrently/);
+  assert.match(pkg.scripts.dev, /watch:css/);
+  assert.match(pkg.scripts.dev, /shopify theme dev/);
 });
