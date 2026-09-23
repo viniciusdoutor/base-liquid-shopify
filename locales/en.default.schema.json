@@ -20,6 +20,7 @@
     "footer": {
       "name": "Footer",
       "settings": {
+        "color_scheme": { "label": "Color scheme" },
         "show_social": { "label": "Show social media icons" },
         "show_payment_icons": { "label": "Show payment icons" },
         "enable_localization": { "label": "Enable country and language selectors" }
@@ -57,6 +58,7 @@
     "image_banner": {
       "name": "Image banner",
       "settings": {
+        "color_scheme": { "label": "Color scheme" },
         "image": { "label": "Image" },
         "height": {
           "label": "Banner height",
@@ -118,7 +120,9 @@
     },
     "rich_text": {
       "name": "Rich text",
-      "settings": {},
+      "settings": {
+        "color_scheme": { "label": "Color scheme" }
+      },
       "blocks": {
         "heading": {
           "name": "Heading",

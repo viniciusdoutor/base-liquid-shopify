@@ -22,7 +22,7 @@
   Textos usam text-shadow para contraste sobre a imagem.
   No mobile, alinhamentos left/right viram center.
 {%- endcomment -%}
-<div class="image-banner image-banner--{{ section.settings.height }}" data-section-id="{{ section.id }}">
+<div class="image-banner image-banner--{{ section.settings.height }} color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
   {%- if section.settings.image != blank -%}
     {{
       section.settings.image
@@ -99,6 +99,7 @@
   "name": "t:sections.image_banner.name",
   "tag": "section",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "t:sections.image_banner.settings.color_scheme.label" },
     { "type": "image_picker", "id": "image", "label": "t:sections.image_banner.settings.image.label" },
     {
       "type": "select",

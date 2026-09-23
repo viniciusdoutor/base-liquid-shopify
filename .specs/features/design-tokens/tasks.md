@@ -224,9 +224,9 @@ T9 → T10
 
 **Done when**:
 
-- [ ] Static test asserts the setting and class in the 3 section files
-- [ ] e2e asserts rendered footer wrapper has class `color-scheme-1` and that `.color-scheme-2` rule exists in page CSS
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] Static test asserts the setting and class in the 3 section files
+- [x] e2e asserts rendered footer wrapper has class `color-scheme-1` and that `.color-scheme-2` rule exists in page CSS
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
 
 **Tests**: e2e
 **Gate**: full

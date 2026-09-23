@@ -19,7 +19,7 @@
   OBSERVAÇÕES:
   Conteúdo limitado a 640px e centralizado.
 {%- endcomment -%}
-<div class="rich-text page-width" data-section-id="{{ section.id }}">
+<div class="rich-text page-width color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
   <div class="rich-text__wrapper">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
@@ -75,6 +75,9 @@
         { "type": "url", "id": "button_link", "label": "t:sections.rich_text.blocks.button.settings.button_link.label" }
       ]
     }
+  ],
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "t:sections.rich_text.settings.color_scheme.label" }
   ],
   "presets": [
     {

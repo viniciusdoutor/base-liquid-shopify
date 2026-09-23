@@ -33,7 +33,7 @@
     (settings.social_*_link), não do schema desta section.
   - Ícones de redes vêm do snippet 'icon'.
 {%- endcomment -%}
-<footer class="footer" data-section-id="{{ section.id }}">
+<footer class="footer color-{{ section.settings.color_scheme }}" data-section-id="{{ section.id }}">
   <div class="footer__top page-width">
     {%- for block in section.blocks -%}
       {%- case block.type -%}
@@ -219,6 +219,7 @@
     }
   ],
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "t:sections.footer.settings.color_scheme.label" },
     { "type": "checkbox", "id": "show_social", "default": true, "label": "t:sections.footer.settings.show_social.label" },
     { "type": "checkbox", "id": "show_payment_icons", "default": true, "label": "t:sections.footer.settings.show_payment_icons.label" },
     { "type": "checkbox", "id": "enable_localization", "default": true, "label": "t:sections.footer.settings.enable_localization.label" }
