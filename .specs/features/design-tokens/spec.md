@@ -166,11 +166,11 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | CS-08 | P1: Esquemas - settings antigos removidos | Tasks | Verified |
 | LEG-01 | P1: Legado - mapeamento de variáveis | Tasks | Verified |
 | LEG-02 | P1: Legado - herda esquema local | Tasks | Verified |
-| LEG-03 | P1: Legado - theme check verde | Design | Pending |
+| LEG-03 | P1: Legado - theme check verde | Tasks | Verified |
 | RAD-01 | P1: Radius - setting | Tasks | Verified |
 | RAD-02 | P1: Radius - escala derivada | Tasks | Verified |
-| RAD-03 | P1: Fontes - font-sans | Design | Pending |
-| RAD-04 | P1: Fontes - font-heading | Design | Pending |
+| RAD-03 | P1: Fontes - font-sans | Tasks | Verified |
+| RAD-04 | P1: Fontes - font-heading | Tasks | Verified |
 | IMP-01 | P2: Import - :root → scheme-1 | Design | Pending |
 | IMP-02 | P2: Import - .dark → scheme-2 | Design | Pending |
 | IMP-03 | P2: Import - conversão OKLCH exata | Design | Pending |
@@ -182,7 +182,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Tasks | Verified |
 
-**Coverage:** 32 total, 20 mapped to tasks (T1-T7), 12 unmapped ⚠️ (mapeamento em `tasks.md`)
+**Coverage:** 32 total, 23 mapped to tasks (T1-T8), 9 unmapped (IMP-01..09, P2 import script — Phase 3/T9-T10 cancelled by orchestrator decision, out of this batch's scope)
 
 ---
 

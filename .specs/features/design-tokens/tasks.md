@@ -250,8 +250,8 @@ T9 → T10
 
 **Done when**:
 
-- [ ] e2e asserts injected `.font-sans` / `.font-heading` probes start with body/heading font families from settings
-- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of phase)
+- [x] e2e asserts injected `.font-sans` / `.font-heading` probes start with body/heading font families from settings
+- [x] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of phase)
 
 **Tests**: e2e
 **Gate**: build

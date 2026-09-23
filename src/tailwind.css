@@ -53,6 +53,9 @@
 */
 @source inline("rounded-{sm,md,lg,xl}");
 
+/* RAD-03/RAD-04: font-sans and font-heading must exist even before any section uses them. */
+@source inline("font-{sans,heading}");
+
 @theme inline {
   /* Tokens de cor shadcn — apontam direto para as custom properties de
      snippets/css-variables.liquid, então uma seção com `.color-scheme-2`
@@ -82,4 +85,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Fontes do tema (settings.type_body_font/type_header_font via css-variables.liquid),
+     substituindo o --font-sans padrão do Tailwind (RAD-03/RAD-04). */
+  --font-sans: var(--font-body-family);
+  --font-heading: var(--font-heading-family);
 }

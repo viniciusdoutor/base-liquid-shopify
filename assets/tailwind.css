@@ -189,6 +189,12 @@
   .bg-secondary-foreground {
     background-color: var(--secondary-foreground);
   }
+  .font-heading {
+    font-family: var(--font-heading-family);
+  }
+  .font-sans {
+    font-family: var(--font-body-family);
+  }
   .text-accent {
     color: var(--accent);
   }
