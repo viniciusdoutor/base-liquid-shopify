@@ -19,7 +19,16 @@
   NÃO EDITE assets/tailwind.css À MÃO — é gerado por este arquivo.
 */
 @import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+/*
+  SPEC_DEVIATION: source(none) turns off Tailwind's automatic whole-project
+  heuristic scan (it reads any non-ignored text file, including Markdown in
+  docs/). Without it, a class-shaped word appearing in unrelated prose (e.g.
+  "outline" in a docs page) leaks into assets/tailwind.css and makes the
+  TW-05 freshness gate depend on files outside the theme. Scanning is
+  restricted to the explicit @source paths below, matching AC TW-02's scope.
+*/
 
 /* Onde procurar classes usadas em arquivos .liquid (AC TW-02). */
 @source "../layout";
@@ -35,6 +44,14 @@
   Tailwind.
 */
 @source inline("{bg,text,border,ring}-{background,foreground,card,card-foreground,popover,popover-foreground,primary,primary-foreground,secondary,secondary-foreground,muted,muted-foreground,accent,accent-foreground,destructive,border,input,ring,sale}");
+
+/*
+  RAD-02 requires --radius-sm/md/lg/xl unconditionally, not only once some
+  section actually uses rounded-*. Tailwind only keeps a @theme variable in
+  the compiled output when a generated utility references it, so force the
+  rounded-* utilities (and thus their backing --radius-* vars) to exist.
+*/
+@source inline("rounded-{sm,md,lg,xl}");
 
 @theme inline {
   /* Tokens de cor shadcn — apontam direto para as custom properties de

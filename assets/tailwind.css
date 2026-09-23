@@ -2,34 +2,15 @@
 @layer properties;
 @layer theme {
   :root, :host {
-    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --radius-sm: calc(var(--radius) - 4px);
-    --radius-md: calc(var(--radius) - 2px);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) + 4px);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --color-background: var(--background);
-    --color-primary: var(--primary);
     --color-accent: var(--accent);
     --color-border: var(--border);
     --color-sale: var(--sale);
   }
 }
 @layer utilities {
-  .fixed {
-    position: fixed;
-  }
-  .relative {
-    position: relative;
-  }
-  .static {
-    position: static;
-  }
-  .isolate {
-    isolation: isolate;
-  }
   .container {
     width: 100%;
     @media (width >= 40rem) {
@@ -51,9 +32,6 @@
   .block {
     display: block;
   }
-  .contents {
-    display: contents;
-  }
   .flex {
     display: flex;
   }
@@ -66,14 +44,8 @@
   .inline {
     display: inline;
   }
-  .table {
-    display: table;
-  }
   .flex-shrink {
     flex-shrink: 1;
-  }
-  .grow {
-    flex-grow: 1;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -89,6 +61,15 @@
   }
   .rounded-lg {
     border-radius: var(--radius);
+  }
+  .rounded-md {
+    border-radius: calc(var(--radius) - 2px);
+  }
+  .rounded-sm {
+    border-radius: calc(var(--radius) - 4px);
+  }
+  .rounded-xl {
+    border-radius: calc(var(--radius) + 4px);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -208,12 +189,6 @@
   .bg-secondary-foreground {
     background-color: var(--secondary-foreground);
   }
-  .fill-primary {
-    fill: var(--primary);
-  }
-  .font-sans {
-    font-family: var(--font-sans);
-  }
   .text-accent {
     color: var(--accent);
   }
@@ -273,9 +248,6 @@
   }
   .capitalize {
     text-transform: capitalize;
-  }
-  .accent-foreground {
-    accent-color: var(--foreground);
   }
   .ring {
     --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);

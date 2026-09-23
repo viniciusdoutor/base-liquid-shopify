@@ -85,12 +85,15 @@ test('TW-04: assets/tailwind.css does not contain the Tailwind preflight box-siz
   assert.doesNotMatch(css, /box-sizing:\s*border-box/);
 });
 
-test('RAD-02: assets/tailwind.css defines --radius-sm/md/lg/xl derived from var(--radius)', () => {
+test('RAD-02: assets/tailwind.css derives rounded-sm/md/lg/xl from var(--radius) with the shadcn formulas', () => {
+  // Tailwind inlines a @theme var straight into its one consuming utility when nothing else
+  // references it, so --radius-sm/md/xl show up as the calc() inside .rounded-sm/md/xl rather
+  // than as standalone custom properties; the formula itself is what RAD-02 requires.
   const css = readFileSync(OUTPUT, 'utf8');
-  assert.match(css, /--radius-sm:\s*calc\(var\(--radius\)\s*-\s*4px\)/);
-  assert.match(css, /--radius-md:\s*calc\(var\(--radius\)\s*-\s*2px\)/);
-  assert.match(css, /--radius-lg:\s*var\(--radius\)/);
-  assert.match(css, /--radius-xl:\s*calc\(var\(--radius\)\s*\+\s*4px\)/);
+  assert.match(css, /\.rounded-sm\s*\{\s*border-radius:\s*calc\(var\(--radius\)\s*-\s*4px\);?\s*\}/);
+  assert.match(css, /\.rounded-md\s*\{\s*border-radius:\s*calc\(var\(--radius\)\s*-\s*2px\);?\s*\}/);
+  assert.match(css, /\.rounded-lg\s*\{\s*border-radius:\s*var\(--radius\);?\s*\}/);
+  assert.match(css, /\.rounded-xl\s*\{\s*border-radius:\s*calc\(var\(--radius\)\s*\+\s*4px\);?\s*\}/);
 });
 
 test("TW-06: layout/theme.liquid loads tailwind.css after index.css and before content_for_header", () => {
