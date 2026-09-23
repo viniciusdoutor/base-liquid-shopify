@@ -338,9 +338,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/e2e/product-media.spec.ts` asserts attributes on first vs subsequent images (fails with `Fixture ausente: produto com 2+ imagens` otherwise)
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
-- [ ] Test count: 4 e2e pass
+- [x] `tests/e2e/product-media.spec.ts` asserts attributes on first vs subsequent images (fails with `Fixture ausente: produto com 2+ imagens` otherwise)
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] Test count: 4 e2e pass
 
 **Tests**: e2e
 **Gate**: full

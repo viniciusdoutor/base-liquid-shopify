@@ -140,8 +140,8 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | E2E-05 | Edge: timeout do `theme dev` | Tasks | Verified |
 | E2E-06 | Edge: fixtures ausentes falham explicitamente | Tasks | Verified |
 | BUG-01 | P1: Bugs - preço "a partir de" formatado | Tasks | Verified |
-| BUG-02 | P1: Bugs - primeira mídia eager + fetchpriority | Tasks | Pending |
-| BUG-03 | P1: Bugs - demais mídias lazy | Tasks | Pending |
+| BUG-02 | P1: Bugs - primeira mídia eager + fetchpriority | Tasks | Verified |
+| BUG-03 | P1: Bugs - demais mídias lazy | Tasks | Verified |
 | BUG-04 | P1: Bugs - troca de variante sem pageerror | Tasks | Pending |
 | BUG-05 | P1: Bugs - carrinho usa `routes.root` | Tasks | Pending |
 | BUG-06 | P1: Bugs - escala `--f8` fluida | Tasks | Pending |
