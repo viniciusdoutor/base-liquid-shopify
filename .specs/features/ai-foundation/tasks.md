@@ -285,10 +285,10 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/e2e/smoke.spec.ts` asserts `/` status 200 and `main#MainContent`
-- [ ] Static test asserts the env guard message and exit code 1 with `SHOPIFY_STORE` unset
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
-- [ ] Test count: 18 static + 1 e2e pass
+- [x] `tests/e2e/smoke.spec.ts` asserts `/` status 200 and `main#MainContent`
+- [x] Static test asserts the env guard message and exit code 1 with `SHOPIFY_STORE` unset
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] Test count: 19 static + 1 e2e pass (extra static test pins the webServer command, host, port and 120 s timeout)
 
 **Tests**: e2e
 **Gate**: full
