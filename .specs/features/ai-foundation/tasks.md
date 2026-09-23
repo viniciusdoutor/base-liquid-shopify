@@ -312,9 +312,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `tests/e2e/price.spec.ts` finds a demo product with price variation (fails with `Fixture ausente: produto com preços variáveis` otherwise) and asserts the card price text contains the money-formatted `price_min` and not the raw cents integer
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
-- [ ] Test count: 2 e2e pass
+- [x] `tests/e2e/price.spec.ts` finds a demo product with price variation (fails with `Fixture ausente: produto com preços variáveis` otherwise) and asserts the card price text contains the money-formatted `price_min` and not the raw cents integer
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] Test count: 2 e2e pass
 
 **Tests**: e2e
 **Gate**: full

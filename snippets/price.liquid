@@ -45,11 +45,13 @@
   if product.price_varies and use_variant == false and product.price_min
     assign price_varies = true
   endif
+
+  assign price_min_money = product.price_min | money
 -%}
 <div class="price {% if on_sale %}price--on-sale{% endif %} {{ price_class }}">
   {%- if price_varies -%}
     <span class="price__regular">
-      {{ 'products.product.price.from_price_html' | t: price: product.price_min | money }}
+      {{ 'products.product.price.from_price_html' | t: price: price_min_money }}
     </span>
   {%- else -%}
     {%- if on_sale and show_compare -%}

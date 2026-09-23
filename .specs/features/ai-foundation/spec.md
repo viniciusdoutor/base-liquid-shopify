@@ -138,8 +138,8 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | E2E-03 | P1: G2 - smoke `/` 200 + `main#MainContent` | Tasks | Verified |
 | E2E-04 | P1: G2 - `.env` ignorado + `.env.example` | Tasks | Verified |
 | E2E-05 | Edge: timeout do `theme dev` | Tasks | Verified |
-| E2E-06 | Edge: fixtures ausentes falham explicitamente | Tasks | Pending |
-| BUG-01 | P1: Bugs - preço "a partir de" formatado | Tasks | Pending |
+| E2E-06 | Edge: fixtures ausentes falham explicitamente | Tasks | Verified |
+| BUG-01 | P1: Bugs - preço "a partir de" formatado | Tasks | Verified |
 | BUG-02 | P1: Bugs - primeira mídia eager + fetchpriority | Tasks | Pending |
 | BUG-03 | P1: Bugs - demais mídias lazy | Tasks | Pending |
 | BUG-04 | P1: Bugs - troca de variante sem pageerror | Tasks | Pending |
