@@ -34,6 +34,19 @@ Decisão nova de projeto vai para `.specs/STATE.md` como `AD-NNN`.
 - Features novas seguem a skill `tlc-spec-driven`, com spec, tasks e validação em `.specs/features/<feature>/`.
 - Commits no formato Conventional Commits, um por tarefa.
 
+## Agentes e modelos
+
+Economia de tokens: o orquestrador (sessão principal) só especifica, decide e lê resumos compactos. Trabalho pesado vai para sub-agentes no modelo mais barato que dá conta.
+
+| Papel | Agente | Modelo | Quando |
+| ----- | ------ | ------ | ------ |
+| Pesquisa / localizar código / docs | `liquid-scout` | haiku | Antes de Specify/Design; nunca edita |
+| Executor de lote (tasks.md) | `tlc-worker` | sonnet | Execute, ~7 tarefas por lote, lotes em sequência |
+| Verificador (autor ≠ verificador) | `tlc-verifier` | sonnet | Automático após a última tarefa de cada feature |
+| Design de alta ambiguidade (F1 tokens, F3 registry, F5 port) | sessão principal | modelo da sessão | Decisões difíceis de reverter |
+
+Regras: sub-agente lê só `CLAUDE.md` + spec/tasks da feature + trechos que a tarefa toca; devolve resumo compacto, nunca logs completos.
+
 ## Mapa de pastas
 
 | Pasta | Conteúdo |
