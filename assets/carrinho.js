@@ -21,6 +21,12 @@
 (function () {
   'use strict';
 
+  function routesRoot() {
+    return window.Shopify && window.Shopify.routes && window.Shopify.routes.root
+      ? window.Shopify.routes.root
+      : '/';
+  }
+
   function updateCartCount(count) {
     document.querySelectorAll('[data-cart-count]').forEach(function (el) {
       el.textContent = count;
@@ -28,7 +34,7 @@
   }
 
   function refreshCartCount() {
-    fetch(window.Shopify && window.Shopify.routes ? window.Shopify.routes.root + 'cart.js' : '/cart.js', {
+    fetch(routesRoot() + 'cart.js', {
       headers: { 'Accept': 'application/json' }
     })
       .then(function (r) { return r.json(); })
@@ -44,7 +50,7 @@
     var button = form.querySelector('[type="submit"], [name="add"]');
     if (button) button.setAttribute('aria-busy', 'true');
 
-    fetch('/cart/add.js', {
+    fetch(routesRoot() + 'cart/add.js', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: new FormData(form)

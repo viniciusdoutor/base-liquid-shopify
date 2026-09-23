@@ -143,7 +143,7 @@ O tema base não tem nenhum gate automatizado além de rodar `shopify theme chec
 | BUG-02 | P1: Bugs - primeira mídia eager + fetchpriority | Tasks | Verified |
 | BUG-03 | P1: Bugs - demais mídias lazy | Tasks | Verified |
 | BUG-04 | P1: Bugs - troca de variante sem pageerror | Tasks | Verified |
-| BUG-05 | P1: Bugs - carrinho usa `routes.root` | Tasks | Pending |
+| BUG-05 | P1: Bugs - carrinho usa `routes.root` | Tasks | Verified |
 | BUG-06 | P1: Bugs - escala `--f8` fluida | Tasks | Pending |
 | BUG-07 | P1: Bugs - gift_card sem erro + QR oficial | Tasks | Verified |
 | BUG-08 | P1: Bugs - localization-form sem erro | Tasks | Verified |
