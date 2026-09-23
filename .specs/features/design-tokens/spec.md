@@ -8,7 +8,6 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 
 - [ ] Classes utilitárias shadcn (`bg-primary`, `text-primary-foreground`, `border-border`, `rounded-lg`...) funcionam em qualquer arquivo `.liquid` do tema
 - [ ] O lojista escolhe esquemas de cor no editor, e qualquer seção com o setting `color_scheme` redefine os tokens localmente
-- [ ] Um tema exportado do tweakcn/shadcn (CSS com `:root` e `.dark`) vira esquemas de cor do tema com um comando
 - [ ] Zero regressão visual nas seções existentes (variáveis legadas continuam resolvendo)
 
 ## Out of Scope
@@ -19,7 +18,8 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | Tailwind preflight (reset) | Conflita com `normalizar.css`; entra quando F2 substituir o CSS legado |
 | Dark mode automático (`prefers-color-scheme`) | Em loja, esquema por seção substitui dark global (pesquisa shadcn, AD-001) |
 | Tokens `chart-*` e `sidebar-*` do shadcn | Sem uso em storefront |
-| Registry `@flowera` | F3 |
+| Registry `@flowera` | Cancelado (AD-003) |
+| Importador de tema shadcn/tweakcn (`import:theme`, antigos IMP-01..09) | Cancelado em 2026-09-23 (AD-003, plano enxuto); conversão manual documentada em `docs/knowledge/03-identidade-visual.md` |
 
 ---
 
@@ -118,30 +118,8 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 
 ---
 
-### P2: Importar tema do shadcn/tweakcn
-
-**User Story**: Como dev, quero colar o CSS de um tema shadcn (tweakcn, ui.shadcn.com/themes) e gerar os esquemas de cor do tema, para começar uma loja com a mesma identidade do projeto React.
-
-**Why P2**: Acelera ports, mas o tema funciona sem isso.
-
-**Acceptance Criteria**:
-
-1. WHEN `npm run import:theme -- <file.css>` is run with a CSS containing `:root { ... }` THEN the system SHALL write `scheme-1` in `config/settings_data.json` (`current.color_schemes`) with the 16 tokens converted to hex.
-2. WHEN the input CSS also contains `.dark { ... }` THEN the system SHALL write `scheme-2` from it.
-3. WHEN the input value is `oklch(0.145 0 0)` THEN the stored hex SHALL be `#0a0a0a`; `oklch(1 0 0)` SHALL be `#ffffff`; `oklch(0.205 0 0)` SHALL be `#171717`.
-4. WHEN the input contains `--popover` and `--card` THEN the system SHALL use `--card` for the `card` scheme field and ignore `--popover`.
-5. IF the input CSS has no `:root` block THEN the system SHALL exit with code 1 and print `Nenhum bloco :root encontrado`.
-6. IF a required token (any of the 16) is missing in `:root` THEN the system SHALL exit with code 1 and print `Token ausente: --<nome>`.
-7. The script SHALL NOT modify any key of `settings_data.json` other than `current.color_schemes`.
-
-**Independent Test**: `npm run import:theme -- tests/fixtures/shadcn-neutral.css` e conferir `scheme-1.background == #ffffff`, `scheme-1.foreground == #0a0a0a`.
-
----
-
 ## Edge Cases
 
-- IF a color in the input CSS is out of sRGB gamut THEN the import SHALL clamp it to the nearest sRGB color instead of failing.
-- IF a value uses `hsl(...)`, `#hex` or `rgb(...)` instead of `oklch(...)` THEN the import SHALL convert it the same way.
 - WHEN `settings.radius` is 0 THEN `--radius-sm` SHALL compute to `0px` or less and rendered corners SHALL be square (`calc` negatives clamp to 0 in `border-radius`).
 
 ---
@@ -172,20 +150,11 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | RAD-02 | P1: Radius - escala derivada | Tasks | Verified |
 | RAD-03 | P1: Fontes - font-sans | Tasks | Verified |
 | RAD-04 | P1: Fontes - font-heading | Tasks | Verified |
-| IMP-01 | P2: Import - :root → scheme-1 | Design | Pending |
-| IMP-02 | P2: Import - .dark → scheme-2 | Design | Pending |
-| IMP-03 | P2: Import - conversão OKLCH exata | Design | Pending |
-| IMP-04 | P2: Import - card vence popover | Design | Pending |
-| IMP-05 | P2: Import - erro sem :root | Design | Pending |
-| IMP-06 | P2: Import - erro token ausente | Design | Pending |
-| IMP-07 | P2: Import - não toca outras chaves | Design | Pending |
-| IMP-08 | Edge: gamut clamp | Design | Pending |
-| IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Tasks | Verified |
 | GATE-01 | Fix: G2 fails when `shopify theme dev` cannot upload a theme file | Phase 4 (T11) | Verified |
-| CS-09 (SPEC_DEVIATION of CS-01, see A-10) | Fix: `background_gradient` (`color_background`) definition required by `role.background.gradient` | Phase 4 (T12) | Verified |
+| CS-09 | Fix: `background_gradient` (`color_background`) definition required by `role.background.gradient` | Phase 4 (T12) | Verified |
 
-**Coverage:** 32 total, 23 mapped to tasks (T1-T8), 9 unmapped (IMP-01..09, P2 import script — Phase 3/T9-T10 cancelled by orchestrator decision, out of this batch's scope). GATE-01 and CS-09 are additional requirements raised by the orchestrator-verified Phase 4 bug fix (settings_schema.json upload rejection), outside the original 32.
+**Coverage:** 25 total (23 originais T1-T8 + GATE-01, CS-09 da Fase 4), 25 mapped, 0 unmapped. IMP-01..09 removidos (AD-003).
 
 ---
 
@@ -193,4 +162,3 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 
 - [ ] Um componente shadcn copiado (ex.: `Button` default) renderiza no Liquid só trocando `className` por `class`
 - [ ] Home, produto e coleção passam no G2 sem mudança visual nas seções legadas (variáveis legadas resolvem)
-- [ ] Importar o tema neutral do shadcn produz exatamente os hex de referência (#ffffff, #0a0a0a, #171717)

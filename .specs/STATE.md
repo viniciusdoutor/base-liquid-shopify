@@ -18,6 +18,14 @@
 - **Date**: 2026-09-22
 - **Status**: active
 
+### AD-003
+- **Decision**: Sem registry/catálogo `@flowera` e sem pipeline de port shadcn→Liquid; o shadcn/ui é só referência de contexto (tokens em pares, composição, anti-padrões), sem equivalência 1:1. O investimento vai para a base de conhecimento `docs/knowledge/` + skill `customize-theme` que tornam a IA eficaz em customizar o tema.
+- **Reason**: Pedido do usuário em 2026-09-23 por um plano mais rápido e com menos fases; customização por IA guiada por docs entrega valor sem manter um catálogo.
+- **Trade-off**: Componentes não são distribuíveis entre lojas via CLI; cada loja recebe as features sob demanda seguindo receitas.
+- **Scope**: Supersede a parte de registry/port do AD-001 (Tailwind v4 + nomes de token shadcn continuam valendo). Features F2–F6 do plano anterior viram receitas em `docs/knowledge/04-receitas.md`.
+- **Date**: 2026-09-23
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: `.specs/features/design-tokens` (F1)
