@@ -364,9 +364,9 @@ T10 → T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Spec passes on a demo product with 2+ variants
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
-- [ ] Test count: 5 e2e pass
+- [x] Spec passes on a demo product with 2+ variants
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] Test count: 5 e2e pass
 
 **Tests**: e2e
 **Gate**: full
