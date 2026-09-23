@@ -4,9 +4,15 @@
   ============================================================
 
   O QUE FAZ:
-  Gera as CSS custom properties (:root) a partir das settings do tema:
-  cores, tipografia (com @font-face), escala de fonte fluida (--f0..--f8)
-  e tokens de layout (largura da página, radius, espaçamento).
+  Gera as CSS custom properties a partir das settings do tema:
+  - Um bloco `.color-<scheme id>` por esquema de `settings.color_schemes`
+    (18 tokens shadcn + 12 aliases legados retrocompatíveis). O primeiro
+    esquema (scheme-1) é combinado com `:root`, então vira o padrão da
+    página inteira; os demais só se aplicam dentro de um wrapper com a
+    classe correspondente (ex.: `.color-scheme-2`).
+  - Um `:root` com `--radius`, `--sale`, tipografia (com @font-face),
+    escala de fonte fluida (--f0..--f8) e tokens de layout (largura da
+    página, radius por elemento, espaçamento).
   Também define estilos base de body e headings.
 
   COMO USAR:
@@ -14,11 +20,16 @@
   Renderize uma única vez, dentro do <head> em theme.liquid.
 
   PARÂMETROS:
-  Nenhum — lê tudo de settings (settings.color_*, settings.type_*, etc).
+  Nenhum — lê tudo de settings (settings.color_schemes, settings.type_*, etc).
 
   OBSERVAÇÕES:
-  Mantém aliases retrocompatíveis (--cor-marca, --cor-verde, --bold...)
-  usados por seções antigas. Se remover, quebra o CSS dessas seções.
+  Mantém aliases retrocompatíveis (--color-*, --cor-marca, --cor-verde,
+  --cor-gelo, --cor-cinza, --bold...) usados por seções antigas.
+  Eles são redeclarados dentro de CADA bloco `.color-<id>` (não só em
+  `:root`): uma custom property que guarda `var(--x)` é calculada onde
+  foi declarada, então declará-la só em `:root` a congelaria no valor
+  do scheme-1 mesmo dentro de um wrapper `.color-scheme-2`. Se remover,
+  quebra o CSS dessas seções.
 {%- endcomment -%}
 {%- liquid
   assign header_font = settings.type_header_font
@@ -32,24 +43,50 @@
   {{ body_font | font_face: font_display: 'swap' }}
   {{ body_font_bold | font_face: font_display: 'swap' }}
 
+  {%- for scheme in settings.color_schemes %}
+  {% if forloop.first %}:root, {% endif %}.color-{{ scheme.id }} {
+    /* shadcn tokens (CS-04) */
+    --background: {{ scheme.settings.background }};
+    --foreground: {{ scheme.settings.foreground }};
+    --card: {{ scheme.settings.card }};
+    --card-foreground: {{ scheme.settings.card_foreground }};
+    --popover: {{ scheme.settings.card }};
+    --popover-foreground: {{ scheme.settings.card_foreground }};
+    --primary: {{ scheme.settings.primary }};
+    --primary-foreground: {{ scheme.settings.primary_foreground }};
+    --secondary: {{ scheme.settings.secondary }};
+    --secondary-foreground: {{ scheme.settings.secondary_foreground }};
+    --muted: {{ scheme.settings.muted }};
+    --muted-foreground: {{ scheme.settings.muted_foreground }};
+    --accent: {{ scheme.settings.accent }};
+    --accent-foreground: {{ scheme.settings.accent_foreground }};
+    --destructive: {{ scheme.settings.destructive }};
+    --border: {{ scheme.settings.border }};
+    --input: {{ scheme.settings.input }};
+    --ring: {{ scheme.settings.ring }};
+
+    /* Backwards-compatible aliases (LEG-01), scoped per scheme (LEG-02) */
+    --color-background: var(--background);
+    --color-text: var(--foreground);
+    --color-background-contrast: var(--muted);
+    --color-text-contrast: var(--foreground);
+    --color-accent: var(--primary);
+    --color-accent-text: var(--primary-foreground);
+    --color-border: var(--border);
+    --color-sale: var(--sale);
+    --cor-marca: var(--primary);
+    --cor-verde: var(--sale);
+    --cor-gelo: var(--muted);
+    --cor-cinza: var(--border);
+  }
+  {%- endfor %}
+
   :root {
     /* Colors */
     --cor-branco: #ffffff;
     --cor-preto: #000000;
-    --color-background: {{ settings.color_background }};
-    --color-text: {{ settings.color_text }};
-    --color-background-contrast: {{ settings.color_background_contrast }};
-    --color-text-contrast: {{ settings.color_text_contrast }};
-    --color-accent: {{ settings.color_accent }};
-    --color-accent-text: {{ settings.color_accent_text }};
-    --color-sale: {{ settings.color_sale }};
-    --color-border: {{ settings.color_border }};
-
-    /* Backwards-compatible aliases used by existing sections */
-    --cor-gelo: {{ settings.color_background_contrast }};
-    --cor-cinza: {{ settings.color_border }};
-    --cor-marca: {{ settings.color_accent }};
-    --cor-verde: {{ settings.color_sale }};
+    --sale: {{ settings.color_sale }};
+    --radius: {{ settings.radius }}px;
 
     /* Typography */
     --font-heading-family: {{ header_font.family }}, {{ header_font.fallback_families }};

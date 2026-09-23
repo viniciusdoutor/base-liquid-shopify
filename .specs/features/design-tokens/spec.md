@@ -159,13 +159,13 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | CS-01 | P1: Esquemas - definition 16 ids | Tasks | Verified |
 | CS-02 | P1: Esquemas - roles | Tasks | Verified |
 | CS-03 | P1: Esquemas - 3 esquemas em settings_data | Tasks | Verified |
-| CS-04 | P1: Esquemas - classes .color-<id> | Design | Pending |
-| CS-05 | P1: Esquemas - :root = scheme-1 | Design | Pending |
+| CS-04 | P1: Esquemas - classes .color-<id> | Tasks | Verified |
+| CS-05 | P1: Esquemas - :root = scheme-1 | Tasks | Verified |
 | CS-06 | P1: Esquemas - seção com scheme-2 | Design | Pending |
 | CS-07 | P1: Esquemas - setting em 3 seções | Design | Pending |
 | CS-08 | P1: Esquemas - settings antigos removidos | Tasks | Verified |
-| LEG-01 | P1: Legado - mapeamento de variáveis | Design | Pending |
-| LEG-02 | P1: Legado - herda esquema local | Design | Pending |
+| LEG-01 | P1: Legado - mapeamento de variáveis | Tasks | Verified |
+| LEG-02 | P1: Legado - herda esquema local | Tasks | Verified |
 | LEG-03 | P1: Legado - theme check verde | Design | Pending |
 | RAD-01 | P1: Radius - setting | Tasks | Verified |
 | RAD-02 | P1: Radius - escala derivada | Tasks | Verified |
@@ -180,9 +180,9 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-07 | P2: Import - não toca outras chaves | Design | Pending |
 | IMP-08 | Edge: gamut clamp | Design | Pending |
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
-| RAD-05 | Edge: radius 0 | Design | Pending |
+| RAD-05 | Edge: radius 0 | Tasks | Verified |
 
-**Coverage:** 32 total, 13 mapped to tasks (T1-T5), 19 unmapped ⚠️ (mapeamento em `tasks.md`)
+**Coverage:** 32 total, 18 mapped to tasks (T1-T6), 14 unmapped ⚠️ (mapeamento em `tasks.md`)
 
 ---
 

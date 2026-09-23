@@ -199,8 +199,8 @@ T9 → T10
 
 **Done when**:
 
-- [ ] `tests/e2e/tokens.spec.ts` asserts `:root` `--background` = scheme-1 background, injected `.color-scheme-2` wrapper computes scheme-2 values for tokens AND legacy `--color-text`, every legacy alias resolves, `rounded-lg` with radius 0 renders 0px corners (via injected style override of `--radius`)
-- [ ] Gate check passes: `npm run test:static && npm run test:e2e`
+- [x] `tests/e2e/tokens.spec.ts` asserts `:root` `--background` = scheme-1 background, injected `.color-scheme-2` wrapper computes scheme-2 values for tokens AND legacy `--color-text`, every legacy alias resolves, `rounded-lg` with radius 0 renders 0px corners (via injected style override of `--radius`)
+- [x] Gate check passes: `npm run test:static && npm run test:e2e`
 
 **Tests**: e2e
 **Gate**: full
