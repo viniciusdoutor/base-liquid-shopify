@@ -156,18 +156,18 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | TW-05 | P1: Pipeline - CSS commitado atualizado | Tasks | Verified |
 | TW-06 | P1: Pipeline - layout carrega tailwind.css | Tasks | Verified |
 | TW-07 | P1: Pipeline - npm run dev paralelo | Tasks | Verified |
-| CS-01 | P1: Esquemas - definition 16 ids | Design | Pending |
-| CS-02 | P1: Esquemas - roles | Design | Pending |
+| CS-01 | P1: Esquemas - definition 16 ids | Tasks | Verified |
+| CS-02 | P1: Esquemas - roles | Tasks | Verified |
 | CS-03 | P1: Esquemas - 3 esquemas em settings_data | Design | Pending |
 | CS-04 | P1: Esquemas - classes .color-<id> | Design | Pending |
 | CS-05 | P1: Esquemas - :root = scheme-1 | Design | Pending |
 | CS-06 | P1: Esquemas - seção com scheme-2 | Design | Pending |
 | CS-07 | P1: Esquemas - setting em 3 seções | Design | Pending |
-| CS-08 | P1: Esquemas - settings antigos removidos | Design | Pending |
+| CS-08 | P1: Esquemas - settings antigos removidos | Tasks | Verified |
 | LEG-01 | P1: Legado - mapeamento de variáveis | Design | Pending |
 | LEG-02 | P1: Legado - herda esquema local | Design | Pending |
 | LEG-03 | P1: Legado - theme check verde | Design | Pending |
-| RAD-01 | P1: Radius - setting | Design | Pending |
+| RAD-01 | P1: Radius - setting | Tasks | Verified |
 | RAD-02 | P1: Radius - escala derivada | Tasks | Verified |
 | RAD-03 | P1: Fontes - font-sans | Design | Pending |
 | RAD-04 | P1: Fontes - font-heading | Design | Pending |
@@ -182,7 +182,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Design | Pending |
 
-**Coverage:** 32 total, 8 mapped to tasks (T1-T3), 24 unmapped ⚠️ (mapeamento em `tasks.md`) — Phase 1 (Tailwind pipeline) complete
+**Coverage:** 32 total, 12 mapped to tasks (T1-T4), 20 unmapped ⚠️ (mapeamento em `tasks.md`) — Phase 1 (Tailwind pipeline) complete
 
 ---
 

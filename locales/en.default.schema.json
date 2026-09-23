@@ -252,41 +252,63 @@
     "colors": {
       "name": "Colors",
       "settings": {
-        "header__primary": {
-          "content": "Primary"
-        },
-        "color_background": {
-          "label": "Background"
-        },
-        "color_text": {
-          "label": "Text"
-        },
-        "header__secondary": {
-          "content": "Contrast"
-        },
-        "color_background_contrast": {
-          "label": "Contrast background"
-        },
-        "color_text_contrast": {
-          "label": "Contrast text"
-        },
-        "header__accent": {
-          "content": "Accent"
-        },
-        "color_accent": {
-          "label": "Accent background"
-        },
-        "color_accent_text": {
-          "label": "Accent text"
+        "color_schemes": {
+          "settings": {
+            "background": {
+              "label": "Background"
+            },
+            "foreground": {
+              "label": "Text"
+            },
+            "card": {
+              "label": "Card background"
+            },
+            "card_foreground": {
+              "label": "Card text"
+            },
+            "primary": {
+              "label": "Primary background"
+            },
+            "primary_foreground": {
+              "label": "Primary text"
+            },
+            "secondary": {
+              "label": "Secondary background"
+            },
+            "secondary_foreground": {
+              "label": "Secondary text"
+            },
+            "muted": {
+              "label": "Muted background"
+            },
+            "muted_foreground": {
+              "label": "Muted text"
+            },
+            "accent": {
+              "label": "Accent background"
+            },
+            "accent_foreground": {
+              "label": "Accent text"
+            },
+            "destructive": {
+              "label": "Destructive"
+            },
+            "border": {
+              "label": "Border"
+            },
+            "input": {
+              "label": "Input border"
+            },
+            "ring": {
+              "label": "Focus ring"
+            }
+          }
         },
         "header__sale": {
           "content": "Sale and borders"
         },
         "color_sale": {
           "label": "Sale price"
-        },
-        "color_border": {
-          "label": "Border"
         }
       }
     },
@@ -316,6 +338,9 @@
     "layout": {
       "name": "Layout",
       "settings": {
+        "radius": {
+          "label": "Corner radius"
+        },
         "page_width": {
           "label": "Page width"
         },

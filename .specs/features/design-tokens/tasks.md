@@ -148,9 +148,9 @@ T9 → T10
 
 **Done when**:
 
-- [ ] `tests/static/settings.test.mjs` asserts ids, roles, radius range/default, removed ids absent, `color_sale` present
-- [ ] `npm run check` exits 0
-- [ ] Gate check passes: `npm run test:static`
+- [x] `tests/static/settings.test.mjs` asserts ids, roles, radius range/default, removed ids absent, `color_sale` present
+- [x] `npm run check` exits 0
+- [x] Gate check passes: `npm run test:static`
 
 **Tests**: static
 **Gate**: quick
