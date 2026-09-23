@@ -26,20 +26,37 @@ valores. Alternativa recomendada: fazer isso pelo **editor de temas**
    `accent`, `accent_foreground`, `destructive`, `border`, `input`, `ring`.
    Use hex. Mantenha contraste AA entre `*` e `*_foreground`.
 3. Cor de promoção: `color_sale` (hex, fora do `color_scheme_group`).
-4. Fontes: `type_header_font` / `type_body_font` aceitam qualquer fonte da
-   biblioteca do Shopify no formato `familia_pesoN<peso>` (ex.:
-   `assistant_n7` = Assistant peso 700). `heading_scale` / `body_scale` são
-   percentuais (100 = tamanho padrão da escala fluida `--f0`..`--f8`).
-5. Radius: `radius` (aplica em `--radius` e nos utilitários Tailwind
-   `rounded-sm/md/lg/xl`), mais `buttons_radius`, `inputs_radius`,
-   `media_radius` (independentes, em px).
+4. Fontes: `type_header_font` / `type_body_font` aceitam qualquer handle da
+   Shopify Fonts library, formato `familia_<n|i><peso>` (ex.: `assistant_n7`
+   = Assistant peso 700 normal; outros handles confirmados:
+   `lora_n4`/`lora_n7`, `playfair_display_n4`, `inter_n4` — ver
+   `docs/knowledge/03-identidade-visual.md` seção 4 antes de usar um handle
+   novo). `heading_scale` / `body_scale` são percentuais (100 = tamanho
+   padrão da escala fluida `--f0`..`--f8`).
+5. Radius: **dois grupos independentes, mude os dois para uma identidade
+   nova** (detalhe em `docs/knowledge/03-identidade-visual.md` seção 4) —
+   `radius` (alimenta `--radius` e `rounded-sm/md/lg/xl` do Tailwind; **não
+   existe em `settings_data.json` por padrão**, adicione a chave se for
+   mudar) e `buttons_radius`/`inputs_radius`/`media_radius` (já existem em
+   `settings_data.json`, em px puro, alimentam CSS legado de sections
+   `main-*`/`nav`/`collection-*`/etc.). Mudar só um grupo deixa sections
+   novas e antigas com cantos diferentes.
 6. Logo/favicon: `logo`, `logo_width`, `favicon` — se for editar pelo código,
    o valor é uma referência de arquivo já enviado (`shopify://shop_images/...`);
    normalmente é mais simples subir pelo editor de temas (upload direto).
 7. Nunca crie um settings id novo aqui sem também declará-lo em
    `config/settings_schema.json` e dar um label em
    `locales/en.default.schema.json` — senão o editor não mostra o campo e o
-   `theme check` acusa setting não usado/indefinido.
+   `theme check` acusa setting não usado/indefinido. **O `id` do
+   `settings_schema.json` é a chave usada em `settings_data.json`**: um
+   setting `{ "id": "color_sale", ... }` no schema vira a chave
+   `current.color_sale` (e `presets.<preset>.color_sale`) no data — mesma
+   lógica dentro de um `color_scheme_group`: o `id` de cada campo da
+   `definition` (ex. `primary`) vira
+   `current.color_schemes["scheme-1"].settings.primary`. Editar o schema sem
+   tocar o data não muda nada visível; editar o data com uma chave que não
+   existe no schema é ignorado silenciosamente (ou acusado pelo `theme
+   check`, dependendo do caso) — sempre os dois arquivos juntos.
 
 **Como verificar:** `npm run check && npm run test:static`, depois
 `npm run dev` e olhar visualmente (home, produto, carrinho) nos dois
@@ -69,14 +86,17 @@ como preset).
    existentes: O QUE FAZ / ONDE É USADA / PRINCIPAIS PARTES / OBSERVAÇÕES —
    veja `sections/rich-text.liquid` como referência mais simples).
 2. Marque no wrapper a classe de esquema de cor, se a section tiver fundo
-   próprio: `class="color-{{ section.settings.color_scheme }}"` — **setting
-   `color_scheme` (disponível após F1 design-tokens; hoje só existe em
-   `image-banner`, `rich-text` e `footer` — confira se já foi mergeado antes
-   de copiar o padrão para uma section nova)**.
-3. Use classes Tailwind com os tokens shadcn em vez de CSS novo sempre que
-   der: `bg-background`, `text-foreground`, `bg-card text-card-foreground`,
-   `border-border`, `rounded-lg` (ver `src/tailwind.css` para a lista
-   completa de tokens/utilitários disponíveis).
+   próprio: `class="color-{{ section.settings.color_scheme }}"` com o
+   setting `color_scheme` (`type: "color_scheme"`, `default: "scheme-1"`) —
+   padrão usado hoje em `sections/footer.liquid`, `rich-text.liquid` e
+   `image-banner.liquid` (testado por `tests/static/section-color-scheme.test.mjs`,
+   CS-06/CS-07). Veja o esqueleto completo logo abaixo.
+3. Classes Tailwind com os tokens shadcn primeiro (`bg-background`,
+   `text-foreground`, `bg-card text-card-foreground`, `border-border`,
+   `rounded-lg`, `gap-6`...; ver `src/tailwind.css` para a lista completa).
+   Só o que essas classes não expressam vai em `{% stylesheet %}` (nunca hex
+   fixo) — ordem completa e exemplos em
+   `docs/knowledge/03-identidade-visual.md` seção 6.
 4. Todo texto visível passa por `| t` com chave em
    `locales/en.default.json` (nunca string fixa em português ou inglês
    direto no `.liquid`).
@@ -115,6 +135,41 @@ como preset).
    `templates/<template>.json` (`sections`, `order`); se for só reutilizável
    pelo editor, o preset do passo 6 já basta.
 10. Rode os gates (ver seção g).
+
+**Esqueleto mínimo copy-paste** (color_scheme + blocks + presets + `t:`,
+padrão de `sections/footer.liquid` — troque `example`/`item` pelo nome real):
+
+```liquid
+<div class="example color-{{ section.settings.color_scheme }} bg-background text-foreground">
+  {%- for block in section.blocks -%}
+    <div class="example__item" {{ block.shopify_attributes }}>
+      <p>{{ block.settings.text | escape }}</p>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.example.name",
+  "tag": "section",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "default": "scheme-1", "label": "t:sections.example.settings.color_scheme.label" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.example.blocks.item.name",
+      "settings": [
+        { "type": "text", "id": "text", "default": "Text", "label": "t:sections.example.blocks.item.settings.text.label" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "t:sections.example.name", "blocks": [{ "type": "item" }] }
+  ]
+}
+{% endschema %}
+```
 
 **Como verificar:** `npm run check && npm run lint:liquid && npm run
 test:static`; depois `npm run dev` e adicione a section pelo editor numa
@@ -203,8 +258,11 @@ não crie sections novas se as existentes já cobrem o briefing).
 3. Para settings de tipo `collection`, use o `handle` real da coleção da loja
    (ex. `"collection": "novidades"`), não invente um handle — confirme no
    admin ou via `npx shopify theme console` (`collections['handle'].title`).
-4. Só crie uma section nova (receita b) se nenhuma combinação de sections +
-   blocks existentes cobre o pedido do briefing.
+4. Só crie uma section nova (**receita b**) se nenhuma combinação de sections
+   + blocks existentes cobre o pedido do briefing; se a section já existe mas
+   falta um tipo de conteúdo dentro dela, é um block novo (**receita c**), não
+   uma section nova. Árvore de decisão completa em
+   `.claude/skills/customize-theme/SKILL.md`, seção "Fluxo".
 
 **Como verificar:** `npm run check && npm run test:static`, depois
 `npm run dev` e abrir a home no editor de temas para o cliente revisar
@@ -279,6 +337,21 @@ explícito ou de um elemento nativo com estado próprio (`<details>`,
 ## f. Adicionar um idioma (pt-BR) e traduzir textos
 
 **Quando usar:** loja vai atender clientes em português.
+
+**Escopo dos dois pares de arquivo** (não confunda um com o outro):
+- `locales/en.default.json` / `locales/pt-BR.json` — **strings visíveis pro
+  cliente** na loja (botões, mensagens, labels de formulário) — todo `| t`
+  usado em `.liquid` fora de `{% schema %}` busca a chave aqui.
+- `locales/en.default.schema.json` / `locales/pt-BR.schema.json` — **labels
+  do editor de temas** (o `name`/`label`/`info` de settings e blocks dentro
+  de `{% schema %}`, visto só por quem customiza a loja no admin, nunca pelo
+  cliente final).
+- `pt-BR.json` tem que espelhar exatamente as chaves de `en.default.json`
+  (mesma estrutura aninhada, só valores traduzidos) — mesma regra entre
+  `pt-BR.schema.json` e `en.default.schema.json`. Toda chave `t:` nova
+  (receitas b/c) precisa existir nos **dois arquivos de schema**; se só
+  existir no idioma padrão, o Shopify usa o inglês como fallback silencioso
+  em vez de dar erro — o `theme check` não pega chave faltando em `pt-BR.*`.
 
 **Arquivos a tocar:** `locales/pt-BR.json` (novo), `locales/pt-BR.schema.json`
 (novo) — não edite `en.default.json`/`en.default.schema.json` para isso
