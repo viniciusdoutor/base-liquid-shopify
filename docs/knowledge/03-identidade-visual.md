@@ -85,7 +85,7 @@ primeiro (seção 4).
 | `--radius` | `radius` (setting global) | base de `rounded-sm/md/lg/xl` | Raio de borda geral do tema |
 
 `primary`/`secondary`/`muted`/`accent` sempre vêm em par com seu
-`*-foreground` — nunca use um sem o outro (ver princípios, seção 7).
+`*-foreground` — nunca use um sem o outro (ver princípios, seção 9).
 
 ## 3. Esquemas padrão e onde `color_scheme` já existe
 
@@ -129,6 +129,20 @@ atualizados nesse meio tempo.
 `--font-sans` no `@theme inline` do Tailwind. Use `font-heading` em
 títulos e `font-sans` no resto — nunca hardcode `font-family` num `.liquid`.
 
+O valor do `font_picker` é um handle da Shopify Fonts library, formato
+`familia_<n|i><peso>` (`n` = normal, `i` = itálico; peso de 1 a 9, ex. 4 =
+regular, 7 = bold) — **não** é o nome legível da fonte. Handles confirmados
+na documentação da Shopify Fonts library (verifique novos handles lá antes de
+usar; o editor de temas também tem um seletor visual que grava o handle
+certo sozinho):
+- `assistant_n4` / `assistant_n7` — Assistant regular/bold (default deste
+  tema, ver `config/settings_schema.json`).
+- `lora_n4` / `lora_n7` — Lora (serifada) regular/bold.
+- `playfair_display_n4` — Playfair Display (serifada, display) regular.
+- `inter_n4` — Inter regular.
+Nunca invente um handle sem confirmar — um handle inexistente faz o editor
+cair silenciosamente na fonte padrão do tema.
+
 **Escala fluida:** `--f0` (menor) até `--f8` (maior), cada um um
 `clamp(mínimo, calc(...vw...), máximo)` interpolado entre viewport de 375px e
 1440px. Use essas variáveis (via CSS custom, não há utilitário Tailwind
@@ -141,7 +155,28 @@ tamanho de texto consistente entre mobile e desktop sem media query manual.
 v4. Use `rounded-sm/md/lg/xl`, não um valor de radius fixo. Existem também
 `buttons_radius`, `inputs_radius`, `media_radius` **independentes**, em px
 puro (não ligados a `--radius`/Tailwind) — são variáveis legadas de CSS
-antigo (`--buttons-radius` etc.), mantidas para o CSS pré-F1 que ainda as usa.
+antigo (`--buttons-radius` etc.), mantidas para o CSS pré-F1 que ainda as usa
+(a maioria das sections `main-*`, `nav`, `collection-*`, `contact-form`,
+`main-cart`, `product-media-gallery`, `localization-form` — confira com
+`grep -rl -- "--buttons-radius\|--inputs-radius\|--media-radius" sections/ snippets/`).
+
+**Qual mudar para uma identidade nova:** os dois grupos coexistem e nenhum
+substitui o outro hoje — **para uma mudança de radius consistente em todo o
+tema, mude os dois**:
+- `radius` — não aparece em `config/settings_data.json` por padrão (o schema
+  já define `default: 10`); se for mudar, **adicione a chave** em
+  `current`/`presets` de `settings_data.json`. Afeta `rounded-sm/md/lg/xl`
+  (Tailwind), usado pelas sections mais novas (`footer`, `image-banner`,
+  `rich-text` e qualquer section nova que siga o esqueleto de
+  `docs/knowledge/04-receitas.md`, receita b).
+- `buttons_radius` / `inputs_radius` / `media_radius` — já existem em
+  `settings_data.json` (`current`/`presets`), em px puro, e continuam
+  alimentando o CSS legado listado acima.
+
+Mudar só um dos dois grupos deixa o tema com dois raios de borda diferentes
+(sections novas com um canto, sections legadas com outro) — foi esse o erro
+do piloto Aurora Café: mudou `buttons_radius`/`media_radius` e deixou `radius`
+no default do schema.
 
 **Variáveis legadas e plano de migração:** `--color-background`,
 `--color-text`, `--color-background-contrast`, `--color-text-contrast`,
@@ -194,7 +229,54 @@ somente-leitura.
   `npm run test:static` para confirmar que a freshness gate passa antes de
   commitar.
 
-## 6. Como criar uma identidade nova a partir de um briefing ou referência
+## 6. CSS além das classes Tailwind — ordem de preferência
+
+Quando uma section precisa de um visual que as classes utilitárias não cobrem
+(grid com número de colunas dinâmico, animação, etc.), siga esta ordem — **nunca
+pule direto para CSS solto com hex fixo**:
+
+1. **Classes Tailwind com os tokens do tema primeiro**: `bg-muted`,
+   `text-primary`, `text-primary-foreground`, `rounded-lg`, `gap-6`,
+   `grid-cols-4`, `border-border`... (tabela da seção 2 + `src/tailwind.css`
+   para a lista completa). Se usar uma classe nova que ainda não existe no
+   CSS compilado, rode `npm run build:css` e **commite `assets/tailwind.css`**
+   junto (gate TW-05 falha se o compilado não bater com o fonte).
+2. **Somente o que as classes não conseguem expressar** vai em
+   `{% stylesheet %}` (não `<style>` solto, em section nova) — usando as
+   mesmas CSS custom properties dos tokens (`var(--primary)`,
+   `var(--muted-foreground)`, `var(--radius)`...), nunca um valor fixo.
+   `{% stylesheet %}` não aceita objetos/tags Liquid dentro (ver
+   `docs/knowledge/02-liquid-shopify-na-pratica.md`, item 12): para variar por
+   setting (ex. número de colunas), passe o valor via CSS custom property
+   inline no wrapper (`style="--n: {{ section.settings.columns }};"`) e
+   consuma com `var(--n)` no `{% stylesheet %}`. Sections mais antigas do tema
+   ainda usam `<style>` simples (pré-datam esta convenção) — não é motivo
+   para copiar o padrão numa section nova.
+3. **Nunca hex direto** em `class`, `style` ou `{% stylesheet %}`/`<style>` —
+   nem para "só uma cor auxiliar"; se o token certo não existe, é sinal de
+   que falta um token no design system (avise, não invente um valor solto).
+
+## 7. Ícones (`snippets/icon.liquid`)
+
+Ícones são SVG inline (`stroke="currentColor"`, então herdam a cor do texto —
+combine com uma classe `text-*`, nunca `fill`/`stroke` fixo). Nomes
+disponíveis hoje (lista completa e atualizada em
+`docs/knowledge/01-mapa-do-tema.md`, seção 4):
+
+- **UI**: `search`, `account`, `cart`, `close`, `chevron`, `trash`.
+- **Comércio/confiança** (frete, parcelamento, Pix, selos, trocas, contato):
+  `truck`, `credit-card`, `pix`, `shield-check`, `refresh`, `gift`, `leaf`,
+  `chat`.
+- **Social**: `instagram`, `facebook`, `linkedin`.
+
+Precisa de um ícone que não está na lista? Adicione um bloco
+`{%- when 'nome' -%}` novo em `snippets/icon.liquid` seguindo o padrão
+existente (SVG 24×24, `fill="none"`, `stroke="currentColor"`,
+`aria-hidden="true"`, `focusable="false"`) — nunca mapeie um conceito
+("Pix", "frete") para um ícone de nome/semântica não relacionada só porque
+já existe.
+
+## 8. Como criar uma identidade nova a partir de um briefing ou referência
 
 1. **Reúna as cores de referência.** Se vier de um site React com
    shadcn/tweakcn, normalmente as cores estão em OKLCH (`oklch(L C H)`) num
@@ -222,7 +304,7 @@ somente-leitura.
 5. **Rode `npm run dev`** e confira visualmente home, produto e coleção nos
    esquemas usados (footer geralmente usa um esquema diferente do resto).
 
-## 7. Princípios
+## 9. Princípios
 
 shadcn/ui aqui é **referência de nomenclatura e proporção**, não um contrato
 1:1 — o objetivo é portar componentes React trocando `className` por `class`

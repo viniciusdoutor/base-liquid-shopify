@@ -113,7 +113,7 @@ arquivo antes de usar; ainda não existe nos demais sections listados acima).
 | `carrinho` | nenhum | só o elemento raiz `<div id="carrinho">`; conteúdo vem de JS externo |
 | `card-product` | `card_product` (objeto product) | ratio vem de `settings.card_image_ratio`; hover-image de `settings.card_show_second_image`; vendor de `settings.card_show_vendor` |
 | `css-variables` | nenhum (lê `settings.*`) | renderizar 1x no `<head>` de `theme.liquid` |
-| `icon` | `name` | valores: `search`, `account`, `cart`, `close`, `chevron`, `trash`, `instagram`, `facebook`, `linkedin` |
+| `icon` | `name` | UI: `search`, `account`, `cart`, `close`, `chevron`, `trash`. Comércio: `truck`, `credit-card`, `pix`, `shield-check`, `refresh`, `gift`, `leaf`, `chat`. Social: `instagram`, `facebook`, `linkedin` |
 | `localization-form` | `section_id`, `show_country` (bool), `show_language` (bool) | só mostra seletor se houver >1 opção disponível |
 | `meta-tags` | nenhum | usa `page_title`, `page_description`, `page_image`, `canonical_url`, `request.page_type`, `product` |
 | `newsletter-form` | `block` (opcional, só para `shopify_attributes`) | form `customer` nativo com tag `newsletter` |
