@@ -10,6 +10,11 @@ const SCHEMA_IDS = [
   'destructive', 'border', 'input', 'ring',
 ];
 
+// CS-09 (SPEC_DEVIATION of CS-01, see spec.md A-10): Shopify rejects settings_schema.json unless
+// role.background.gradient references a `color_background` definition, so the definition array
+// carries this 17th field alongside the 16 shadcn color ids.
+const GRADIENT_ID = 'background_gradient';
+
 const REMOVED_LEGACY_IDS = [
   'color_background', 'color_text', 'color_background_contrast', 'color_text_contrast',
   'color_accent', 'color_accent_text', 'color_border',
@@ -43,7 +48,18 @@ test('CS-01: settings_schema.json defines a color_scheme_group "color_schemes" w
   assert.ok(group, 'color_scheme_group "color_schemes" not found');
   assert.ok(Array.isArray(group.definition), 'color_schemes must have a definition array');
   const ids = group.definition.map((d) => d.id);
-  assert.deepEqual(ids.sort(), [...SCHEMA_IDS].sort());
+  // CS-09 (SPEC_DEVIATION): the definition also carries `background_gradient`, required by
+  // role.background.gradient (see below) - the 16 shadcn ids are still all present, exactly.
+  assert.deepEqual(ids.sort(), [...SCHEMA_IDS, GRADIENT_ID].sort());
+});
+
+test('CS-09 (SPEC_DEVIATION of CS-01): background_gradient is a color_background definition referenced by role.background.gradient', () => {
+  const schema = loadSchema();
+  const group = findColorSchemeGroup(schema);
+  const gradientDef = group.definition.find((d) => d.id === GRADIENT_ID);
+  assert.ok(gradientDef, `definition must include "${GRADIENT_ID}"`);
+  assert.equal(gradientDef.type, 'color_background', 'Shopify requires role.background.gradient to reference a color_background definition');
+  assert.equal(group.role.background.gradient, GRADIENT_ID);
 });
 
 test('CS-02: color_schemes role maps background.solid, text, button and link roles per spec', () => {
@@ -51,6 +67,7 @@ test('CS-02: color_schemes role maps background.solid, text, button and link rol
   const group = findColorSchemeGroup(schema);
   const role = group.role;
   assert.equal(role.background.solid, 'background');
+  assert.equal(role.background.gradient, GRADIENT_ID);
   assert.equal(role.text, 'foreground');
   assert.equal(role.primary_button, 'primary');
   assert.equal(role.on_primary_button, 'primary_foreground');
@@ -84,10 +101,17 @@ test('CS-03: settings_data.json defines scheme-1/2/3 with a hex value for each o
       const scheme = scope.color_schemes[schemeId];
       assert.ok(scheme, `${schemeId} missing`);
       const settings = scheme.settings;
-      assert.deepEqual(Object.keys(settings).sort(), [...SCHEMA_IDS].sort(), `${schemeId} must define exactly the 16 ids`);
+      // CS-09 (SPEC_DEVIATION): background_gradient is the 17th key, required by the schema's
+      // color_background definition; it is not a hex color and is checked separately below.
+      assert.deepEqual(
+        Object.keys(settings).sort(),
+        [...SCHEMA_IDS, GRADIENT_ID].sort(),
+        `${schemeId} must define the 16 shadcn ids plus ${GRADIENT_ID}`,
+      );
       for (const id of SCHEMA_IDS) {
         assert.match(settings[id], /^#[0-9a-fA-F]{6}$/, `${schemeId}.${id} must be a hex color`);
       }
+      assert.equal(settings[GRADIENT_ID], '', `${schemeId}.${GRADIENT_ID} must be an empty color_background value (no gradient set)`);
     }
   }
 });

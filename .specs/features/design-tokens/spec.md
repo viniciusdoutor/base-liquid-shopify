@@ -183,7 +183,7 @@ O tema expõe 8 cores soltas (`color_background`, `color_accent`...) com nomes p
 | IMP-09 | Edge: hsl/rgb/hex aceitos | Design | Pending |
 | RAD-05 | Edge: radius 0 | Tasks | Verified |
 | GATE-01 | Fix: G2 fails when `shopify theme dev` cannot upload a theme file | Phase 4 (T11) | Verified |
-| CS-09 (SPEC_DEVIATION of CS-01, see A-10) | Fix: `background_gradient` (`color_background`) definition required by `role.background.gradient` | Phase 4 (T12) | Pending |
+| CS-09 (SPEC_DEVIATION of CS-01, see A-10) | Fix: `background_gradient` (`color_background`) definition required by `role.background.gradient` | Phase 4 (T12) | Verified |
 
 **Coverage:** 32 total, 23 mapped to tasks (T1-T8), 9 unmapped (IMP-01..09, P2 import script — Phase 3/T9-T10 cancelled by orchestrator decision, out of this batch's scope). GATE-01 and CS-09 are additional requirements raised by the orchestrator-verified Phase 4 bug fix (settings_schema.json upload rejection), outside the original 32.
 

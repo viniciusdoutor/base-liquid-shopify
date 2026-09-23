@@ -366,12 +366,12 @@ T12 fixes the schema (must turn T11 GREEN).
 
 **Done when**:
 
-- [ ] `settings_schema.json`'s `color_schemes.definition` includes `background_gradient` with `type: color_background`, and `role.background.gradient` equals `background_gradient`
-- [ ] `config/settings_data.json` sets `background_gradient: ""` for `scheme-1/2/3` in both `current` and the `Base Liquid` preset
-- [ ] `tests/static/settings.test.mjs` updated: CS-01 expects the 16 shadcn ids plus `background_gradient`; CS-02 asserts `role.background.gradient === 'background_gradient'`; CS-03 expects the extra key with value `''` and does not weaken the 16 hex-color assertions
-- [ ] `spec.md` Assumptions table gets a SPEC_DEVIATION row for the 17th field; Requirement Traceability gets GATE-01 and CS-09 rows, both `Verified`
-- [ ] T11's `global-setup.ts` no longer fails (upload succeeds) — the RED from T11 is now GREEN
-- [ ] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of batch)
+- [x] `settings_schema.json`'s `color_schemes.definition` includes `background_gradient` with `type: color_background`, and `role.background.gradient` equals `background_gradient`
+- [x] `config/settings_data.json` sets `background_gradient: ""` for `scheme-1/2/3` in both `current` and the `Base Liquid` preset
+- [x] `tests/static/settings.test.mjs` updated: CS-01 expects the 16 shadcn ids plus `background_gradient`; CS-02 asserts `role.background.gradient === 'background_gradient'`; CS-03 expects the extra key with value `''` and does not weaken the 16 hex-color assertions
+- [x] `spec.md` Assumptions table gets a SPEC_DEVIATION row for the 17th field; Requirement Traceability gets GATE-01 and CS-09 rows, both `Verified`
+- [x] T11's `global-setup.ts` no longer fails (upload succeeds) — the RED from T11 is now GREEN (full `npx playwright test` run: 15/15 passed, global setup did not throw)
+- [x] Gate check passes: `npm run check && npm run lint:liquid && npm run test:static && npm run test:e2e` (build gate, end of batch) — theme check 56 files/0 offenses, lint 36 files OK, static 37/37 passed, e2e 15/15 passed
 
 **Tests**: static, e2e
 **Gate**: build

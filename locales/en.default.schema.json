@@ -261,6 +261,9 @@
             "background": {
               "label": "Background"
             },
+            "background_gradient": {
+              "label": "Background gradient"
+            },
             "foreground": {
               "label": "Text"
             },
