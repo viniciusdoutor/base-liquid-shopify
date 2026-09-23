@@ -48,7 +48,7 @@ Economia de tokens: o orquestrador (sessão principal) só especifica, decide e 
 | Pesquisa / localizar código / docs | `liquid-scout` | haiku | Antes de Specify/Design; nunca edita |
 | Executor de lote (tasks.md) | `tlc-worker` | sonnet | Execute, ~7 tarefas por lote, lotes em sequência |
 | Verificador (autor ≠ verificador) | `tlc-verifier` | sonnet | Automático após a última tarefa de cada feature |
-| Design de alta ambiguidade (F1 tokens, F3 registry, F5 port) | sessão principal | modelo da sessão | Decisões difíceis de reverter |
+| Design de alta ambiguidade (ex.: sistema de tokens, arquitetura nova) | sessão principal | modelo da sessão | Decisões difíceis de reverter |
 
 Regras: sub-agente lê só `CLAUDE.md` + spec/tasks da feature + trechos que a tarefa toca; devolve resumo compacto, nunca logs completos.
 
